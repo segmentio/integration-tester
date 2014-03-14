@@ -57,20 +57,20 @@ describe('Assertion', function(){
         .expects(200, done);
     })
 
-    it('should error if regexp doesnt match', function(done){
-      Assertion(segment)
-        .identify({})
-        .set('key', 'baz')
-        .sends('Content-Type', /baz/)
-        .end(error('expected header "Content-Type: application/json" to match "/baz/"', done));
-    })
-
-    it('should error on mismatch', function(done){
+    it('should error if header doesnt match', function(done){
       Assertion(segment)
         .identify({})
         .set('key', 'baz')
         .sends('Content-Type', 'baz')
         .end(error('expected header "Content-Type: application/json" to match "baz"', done));
+    })
+
+    it('should error if regexp header doesnt match', function(done){
+      Assertion(segment)
+        .identify({})
+        .set('key', 'baz')
+        .sends('Content-Type', /baz/)
+        .end(error('expected header "Content-Type: application/json" to match "/baz/"', done));
     })
   })
 
@@ -83,6 +83,15 @@ describe('Assertion', function(){
         .sends({ userId: 1, key: 'baz', timestamp: date })
         .expects(200, done);
     })
+
+    it('should assert regexp request correctly', function(done){
+      Assertion(segment)
+        .set('text', true)
+        .set('key', 'baz')
+        .group({})
+        .sends(/baz/)
+        .expects(200, done);
+    })
   })
 
   describe('.expects(value)', function(done){
@@ -90,6 +99,64 @@ describe('Assertion', function(){
       Assertion(segment)
         .identify({})
         .expects(400, done);
+    })
+
+    it('should assert object response correctly', function(done){
+      Assertion(segment)
+        .set('key', 'baz')
+        .track({})
+        .expects({ success: true })
+        .expects(200, done);
+    })
+
+    it('should assert string response correctly', function(done){
+      Assertion(segment)
+        .set('key', 'baz')
+        .set('text', true)
+        .identify({})
+        .expects('success=true', done);
+    })
+
+    it('should assert regexp response correctly', function(done){
+      Assertion(segment)
+        .set('key', 'baz')
+        .set('text', true)
+        .identify({})
+        .expects(/success/, done);
+    })
+
+    it('should error if object doesnt match response', function(done){
+      Assertion(segment)
+        .set('key', 'baz')
+        .alias({})
+        .expects({ 0: 0 })
+        .end(error('expected "{ \'0\': 0 }" but got "{ success: true }"', done));
+    })
+
+    it('should error if status doesnt match', function(done){
+      Assertion(segment)
+        .set('key', 'baz')
+        .identify({})
+        .expects(500)
+        .end(error('expected "500" but got "200"', done));
+    })
+
+    it('should error if string doesnt match response', function(done){
+      Assertion(segment)
+        .set('key', 'baz')
+        .set('text', true)
+        .identify({})
+        .expects('weee')
+        .end(error('expected "weee" but got "success=true"', done));
+    })
+
+    it('should error if regexp doesnt match response', function(done){
+      Assertion(segment)
+        .set('key', 'baz')
+        .set('text', true)
+        .identify({})
+        .expects(/wee/)
+        .end(error('expected "success=true" to match "/wee/"', done));
     })
   })
 })

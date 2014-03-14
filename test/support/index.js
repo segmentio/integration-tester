@@ -3,9 +3,16 @@
  * Respond with text
  */
 
-exports.text = function(req, res){
-  if (!req.body.key) return res.send(400, 'key required');
-  res.send(200, 'success: yes');
+exports.text = function(req, res, next){
+  var str = '';
+  req.setEncoding('utf-8');
+  req.on('data', function(c){ str += c; });
+  req.on('error', next);
+  req.on('end', function(){
+    var obj = JSON.parse(str);
+    if (!obj.key) return res.send(200, 'key required');
+    res.send(200, 'success=true');
+  });
 };
 
 /**
