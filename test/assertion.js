@@ -72,6 +72,25 @@ describe('Assertion', function(){
     })
   })
 
+  describe('.error(fn)', function(){
+    it('should assert integration error', function(done){
+      Assertion(segment)
+        .identify({})
+        .set({ handle: true })
+        .error(done);
+    })
+
+    it('should throw if integration didnt error', function(done){
+      Assertion(segment)
+        .identify({})
+        .set({ key: 'baz' })
+        .error(function(err){
+          assert(err);
+          done();
+        });
+    })
+  })
+
   describe('.sends(key, value)', function(){
     it('should assert sent headers correctly', function(done){
       Assertion(segment)

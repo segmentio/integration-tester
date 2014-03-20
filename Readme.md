@@ -64,6 +64,10 @@ assert(integration)
 
   End assertions with `fn`.
 
+##### error(fn)
+
+  Assert integration calls `fn(err)`.
+
 ##### enabled(facade)
 
   `true` if integration is enabled for `facade`
