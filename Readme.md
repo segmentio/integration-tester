@@ -74,7 +74,7 @@ assert(integration)
 
 ##### CHANNEL(msg)
 
-  Assert integration is enabled on `channel` with optional `msg`.
+  `true` if integration is enabled on `channel` with optional `msg`.
 
     // examples
     server();
@@ -83,7 +83,7 @@ assert(integration)
 
 ##### all()
 
-  Assert integration is enabled on all channels.
+  `true` if integration is enabled on all channels.
 
 ## License
 

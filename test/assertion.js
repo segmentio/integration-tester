@@ -52,33 +52,23 @@ describe('Assertion', function(){
         assert('id' == msg.userId());
         return true;
       };
-      Assertion(segment).server({ userId: 'id' });
+      assert(Assertion(segment).server({ userId: 'id' }));
     })
 
-    it('should throw if integration is not enabled on channel', function(done){
-      try {
-        Assertion(segment).mobile();
-      } catch (e) {
-        assert('expected integration to be enabled for "mobile"' == e.message);
-        done();
-      }
+    it('should return false if integration is not enabled on channel', function(){
+      assert(!Assertion(segment).mobile());
     })
   })
 
   describe('.all()', function(){
     it('should assert integration enabled on all channels', function(){
       segment.enabled = function(){ return true; };
-      Assertion(segment).all();
+      assert(Assertion(segment).all());
     })
 
-    it('should throw if integration is not enabled on all channels', function(done){
+    it('should throw if integration is not enabled on all channels', function(){
       segment.enabled = function(msg){ return 'server' == msg.channel(); };
-      try {
-        Assertion(segment).all();
-      } catch (e) {
-        assert('expected integration to be enabled on all channels its disabled on "client"' == e.message);
-        done();
-      }
+      assert(!Assertion(segment).all());
     })
   })
 
