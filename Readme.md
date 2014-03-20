@@ -68,13 +68,13 @@ assert(integration)
 
   Assert integration calls `fn(err)`.
 
-##### enabled(facade)
+##### enabled(msg)
 
-  `true` if integration is enabled for `facade`
+  `true` if integration is enabled for `msg`
 
-##### disabled(facade)
+##### disabled(msg)
 
-  `true` if integration is disabled for `facade`.
+  `true` if integration is disabled for `msg`.
 
 ##### CHANNEL(msg)
 
