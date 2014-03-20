@@ -84,6 +84,22 @@ describe('Assertion', function(){
         .expects(200, done);
     })
 
+    it('should assert querystring correctly', function(done){
+      Assertion(segment)
+        .identify({ userId: 1 })
+        .set('key', 'baz')
+        .sends('?baz')
+        .expects(200, done);
+    })
+
+    it('should error on querystring mismatch', function(done){
+      Assertion(segment)
+        .identify({ userId: 1 })
+        .set('key', 'baz')
+        .sends('?baz=wee')
+        .end(error('expected "baz=foo" to include "baz=wee"', done));
+    })
+
     it('should assert regexp request correctly', function(done){
       Assertion(segment)
         .set('text', true)

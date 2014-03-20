@@ -48,6 +48,7 @@ exports.send = function(facade, settings, fn){
 
   this
     .post(type + '/' + facade.action())
+    .query('baz=foo')
     .set('Content-Type', header)
     .set('X-Key', settings.key)
     .send(payload)
