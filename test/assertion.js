@@ -2,6 +2,7 @@
 var integration = require('segmentio-integration');
 var support = require('./support');
 var express = require('express');
+var assert = require('assert');
 var Assertion = require('..');
 
 describe('Assertion', function(){
@@ -37,6 +38,37 @@ describe('Assertion', function(){
   describe('()', function(){
     it('should throw', function(){
       Assertion.should.throw('expected integration');
+    })
+  })
+
+  describe('.CHANNEL()', function(){
+    it('should assert integration enabled correctly', function(){
+      Assertion(segment).server();
+    })
+
+    it('should throw if integration is not enabled on channel', function(done){
+      try {
+        Assertion(segment).mobile();
+      } catch (e) {
+        assert('expected integration to be enabled for "mobile"' == e.message);
+        done();
+      }
+    })
+  })
+
+  describe('.all()', function(){
+    it('should assert integration enabled on all channels', function(){
+      segment.enabled = function(){ return true; };
+      Assertion(segment).all();
+    })
+
+    it('should throw if integration is not enabled on all channels', function(){
+      try {
+        Assertion(segment).all();
+      } catch (e) {
+        assert('expected integration to be enabled on all channels' == e.message);
+        done();
+      }
     })
   })
 
