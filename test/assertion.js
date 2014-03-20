@@ -19,7 +19,7 @@ describe('Assertion', function(){
     server = app.listen(3000, done);
   })
 
-  before(function(){
+  beforeEach(function(){
     Segment = integration('Segment');
     Segment.endpoint('http://localhost:3000/');
     Segment.prototype.identify = support.send;
@@ -46,6 +46,15 @@ describe('Assertion', function(){
       Assertion(segment).server();
     })
 
+    it('should respect optional `msg`', function(){
+      segment.enabled = function(msg){
+        assert('function' == typeof msg.action);
+        assert('id' == msg.userId());
+        return true;
+      };
+      Assertion(segment).server({ userId: 'id' });
+    })
+
     it('should throw if integration is not enabled on channel', function(done){
       try {
         Assertion(segment).mobile();
@@ -62,11 +71,12 @@ describe('Assertion', function(){
       Assertion(segment).all();
     })
 
-    it('should throw if integration is not enabled on all channels', function(){
+    it('should throw if integration is not enabled on all channels', function(done){
+      segment.enabled = function(msg){ return 'server' == msg.channel(); };
       try {
         Assertion(segment).all();
       } catch (e) {
-        assert('expected integration to be enabled on all channels' == e.message);
+        assert('expected integration to be enabled on all channels its disabled on "client"' == e.message);
         done();
       }
     })

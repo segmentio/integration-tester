@@ -72,9 +72,9 @@ assert(integration)
 
   `true` if integration is disabled for `facade`.
 
-##### CHANNEL()
+##### CHANNEL(msg)
 
-  Assert integration is enabled on `channel`
+  Assert integration is enabled on `channel` with optional `msg`.
 
     // examples
     server();
