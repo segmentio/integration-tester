@@ -11,6 +11,6 @@
     "mocha": "*",
     "superagent": "*",
     "segmentio-integration": "*",
-    "express": "*"
+    "express": "3"
   }
 }
