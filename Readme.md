@@ -3,6 +3,8 @@
 
   Integration tester.
 
+[![Build Status](https://circleci.com/gh/segmentio/integration-tester.png?circle-token=5661c08914a340dcbb99e778e72c18641b9f8576)](https://circleci.com/gh/segmentio/integration-tester)
+
 ## Installation
 
 ```bash
