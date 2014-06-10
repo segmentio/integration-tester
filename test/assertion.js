@@ -113,7 +113,7 @@ describe('Assertion', function(){
         .identify({})
         .set('key', 'baz')
         .sends('Content-Type', 'baz')
-        .end(error('expected header "Content-Type: application/json" to match "baz"', done));
+        .end(error('expected header \'Content-Type\': \'application/json\' to match \'baz\'', done));
     })
 
     it('should error if regexp header doesnt match', function(done){
@@ -121,7 +121,7 @@ describe('Assertion', function(){
         .identify({})
         .set('key', 'baz')
         .sends('Content-Type', /baz/)
-        .end(error('expected header "Content-Type: application/json" to match "/baz/"', done));
+        .end(error('expected header \'Content-Type\': \'application/json\' to match /baz/', done));
     })
   })
 
@@ -148,7 +148,7 @@ describe('Assertion', function(){
         .identify({ userId: 1 })
         .set('key', 'baz')
         .sends('?baz=wee')
-        .end(error('expected "baz=foo" to include "baz=wee"', done));
+        .end(error('expected \'baz=foo\' to include \'baz=wee\'', done));
     })
 
     it('should assert regexp request correctly', function(done){
@@ -197,7 +197,7 @@ describe('Assertion', function(){
         .set('key', 'baz')
         .alias({})
         .expects({ 0: 0 })
-        .end(error('expected "{ \'0\': 0 }" but got "{ success: true }"', done));
+        .end(error('expected { \'0\': 0 } but got { success: true }', done));
     })
 
     it('should error if status doesnt match', function(done){
@@ -205,7 +205,7 @@ describe('Assertion', function(){
         .set('key', 'baz')
         .identify({})
         .expects(500)
-        .end(error('expected "500" but got "200"', done));
+        .end(error('expected 500 but got 200', done));
     })
 
     it('should error if string doesnt match response', function(done){
@@ -214,7 +214,7 @@ describe('Assertion', function(){
         .set('text', true)
         .identify({})
         .expects('weee')
-        .end(error('expected "weee" but got "success=true"', done));
+        .end(error('expected \'weee\' but got \'success=true\'', done));
     })
 
     it('should error if regexp doesnt match response', function(done){
@@ -223,7 +223,7 @@ describe('Assertion', function(){
         .set('text', true)
         .identify({})
         .expects(/wee/)
-        .end(error('expected "success=true" to match "/wee/"', done));
+        .end(error('expected \'success=true\' to match /wee/', done));
     })
   })
 })
