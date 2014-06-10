@@ -11,6 +11,7 @@
     "mocha": "*",
     "superagent": "*",
     "segmentio-integration": "*",
-    "express": "*"
+    "express": "*",
+    "body-parser": "~1.3.0"
   }
 }

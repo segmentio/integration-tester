@@ -1,5 +1,6 @@
 
 var integration = require('segmentio-integration');
+var bodyParser = require('body-parser');
 var support = require('./support');
 var express = require('express');
 var assert = require('assert');
@@ -12,8 +13,8 @@ describe('Assertion', function(){
 
   before(function(done){
     var app = express();
-    app.use(express.urlencoded());
-    app.use(express.json());
+    app.use(bodyParser.urlencoded());
+    app.use(bodyParser.json());
     app.all('/text/:action', support.text);
     app.all('/json/:action', support.json);
     server = app.listen(3000, done);
