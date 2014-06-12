@@ -38,6 +38,19 @@ assert(integration)
 
   Initialize new Assertion with `integration`.
 
+##### query(obj)
+
+  Add query.
+
+  Example:
+
+    Assertion(integration)
+      .set('token', 'e16481cb')
+      .identify({ userId: 1 })
+      .query({ identify: true })
+      .query({ userid: 2 })
+      .expects(200, done);
+
 ##### set(key, value)
 
   Set object `key` or `key, value` settings.
