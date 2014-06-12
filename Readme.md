@@ -48,7 +48,7 @@ assert(integration)
       .set('token', 'e16481cb')
       .identify({ userId: 1 })
       .query({ identify: true })
-      .query({ userid: 2 })
+      .query({ userid: 1 })
       .expects(200, done);
 
 ##### set(key, value)
