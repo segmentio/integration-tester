@@ -60,6 +60,13 @@ describe('Assertion', function(){
     })
   })
 
+  describe('.enabled(msg)', function(){
+    it('should pass settings too', function(){
+      segment.enabled = function(msg, conf){ return 1 == conf.setting; };
+      assert(Assertion(segment).set('setting', true).enabled({}));
+    })
+  })
+
   describe('.all()', function(){
     it('should assert integration enabled on all channels', function(){
       segment.enabled = function(){ return true; };
