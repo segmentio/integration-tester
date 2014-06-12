@@ -98,6 +98,26 @@ describe('Assertion', function(){
     })
   })
 
+  describe('.query(obj)', function(){
+    it('should assert sent query correctly', function(done){
+      Assertion(segment)
+        .set({ query: 'foo=baz' })
+        .set({ key: 'baz' })
+        .identify({})
+        .query({ foo: 'baz' })
+        .expects(200, done);
+    })
+
+    it('should buffer arguments', function(done){
+      Assertion(segment)
+        .set({ query: 'foo=baz&baz=foo' })
+        .set({ key: 'baz' })
+        .identify({})
+        .query({ foo: 'baz', baz: 'foo' })
+        .expects(200, done);
+    })
+  })
+
   describe('.sends(key, value)', function(){
     it('should assert sent headers correctly', function(done){
       Assertion(segment)
