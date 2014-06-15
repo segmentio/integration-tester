@@ -1,9 +1,11 @@
 
 var integration = require('segmentio-integration');
+var facade = require('segmentio-facade');
 var support = require('./support');
 var express = require('express');
 var assert = require('assert');
 var Assertion = require('..');
+var Track = facade.Track;
 
 describe('Assertion', function(){
   var Segment;
@@ -58,12 +60,26 @@ describe('Assertion', function(){
     it('should return false if integration is not enabled on channel', function(){
       assert(!Assertion(segment).mobile());
     })
+
+    it('should accept facade instance', function(){
+      segment.enabled = function(msg){ return 'server' == msg.channel(); };
+      assert(Assertion(segment).server(new Track({})));
+    })
+
+    it('should pick facade by `type` / `action`', function(){
+      segment.enabled = function(msg){ return 'page' == msg.type(); };
+      assert(Assertion(segment).server({ type: 'page' }));
+    })
   })
 
   describe('.enabled(msg)', function(){
     it('should pass settings too', function(){
       segment.enabled = function(msg, conf){ return 1 == conf.setting; };
       assert(Assertion(segment).set('setting', true).enabled({}));
+    })
+
+    it('should accept facade instances', function(){
+      assert(Assertion(segment).enabled(new Track({ channel: 'server' })));
     })
   })
 
