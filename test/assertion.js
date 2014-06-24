@@ -174,7 +174,7 @@ describe('Assertion', function(){
       Assertion(segment)
         .identify({ userId: 1, timestamp: date })
         .set('key', 'baz')
-        .sends({ userId: 1, key: 'baz', timestamp: date })
+        .sends({ userId: 1, key: 'baz', timestamp: date, type: 'identify' })
         .expects(200, done);
     })
 
