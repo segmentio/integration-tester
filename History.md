@@ -1,4 +1,10 @@
 
+0.1.1 / 2014-06-24
+==================
+
+ * updating facade dep
+ * .CHANNEL(): make sure facade instance is created / augmented, fixes #9
+
 0.1.0 / 2014-06-12
 ==================
 

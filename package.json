@@ -2,7 +2,7 @@
   "name": "segmentio-integration-tester",
   "repo": "segmentio/integration-tester",
   "description": "integration tester",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "dependencies": {
     "qs": "^0.6.6",
     "segmentio-facade": "1.X"
