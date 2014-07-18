@@ -59,7 +59,6 @@ describe('Assertion', function(){
     })
   })
 
-
   describe('.name(name)', function(){
     it('should not throw when the name is correct', function(){
       Assertion(segment).name('Segment');
