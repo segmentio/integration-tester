@@ -63,7 +63,7 @@ describe('Assertion', function(){
     })
   })
 
-  describe('.endpoint()', function(){
+  describe('.endpoint(url)', function(){
     it('should not throw when given correct url', function(){
       Assertion(segment).endpoint(segment.endpoint);
     })
