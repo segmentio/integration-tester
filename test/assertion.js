@@ -43,6 +43,23 @@ describe('Assertion', function(){
     })
   })
 
+  describe('.retries(n)', function(){
+    beforeEach(function(){
+      Segment.retries(2);
+      segment = new Segment();
+    })
+
+    it('should not throw when number of retries is correct', function(){
+      Assertion(segment).retries(2);
+    })
+
+    it('should throw when number of retries is incorrect', function(){
+      var a = Assertion(segment);
+      throws(a.retries.bind(a, 3), 'expected retries to be "3" but it\'s "2"');
+    })
+  })
+
+
   describe('.name(name)', function(){
     it('should not throw when the name is correct', function(){
       Assertion(segment).name('Segment');
