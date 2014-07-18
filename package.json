@@ -8,7 +8,6 @@
     "segmentio-facade": "1.X"
   },
   "devDependencies": {
-    "should": "*",
     "mocha": "*",
     "superagent": "*",
     "segmentio-integration": "*",

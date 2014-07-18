@@ -39,7 +39,7 @@ describe('Assertion', function(){
 
   describe('()', function(){
     it('should throw', function(){
-      Assertion.should.throw('expected integration');
+      assert.throws(Assertion, 'expected integration');
     })
   })
 
@@ -278,7 +278,7 @@ describe('Assertion', function(){
 function error(msg, done){
   return function(err, res){
     if (!err) return done(new Error('expected an error'));
-    err.message.should.eql(msg);
+    assert.equal(err.message, msg);
     done();
   };
 }
