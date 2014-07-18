@@ -28,10 +28,10 @@ exports.json = function(req, res){
  * Send
  */
 
-exports.send = function(facade, settings, fn){
+exports.send = function(msg, settings, fn){
   var type = 'json';
   var header = 'application/json';
-  var payload = facade.json();
+  var payload = msg.json();
   var text = settings.text;
 
   payload.key = settings.key;
@@ -47,7 +47,7 @@ exports.send = function(facade, settings, fn){
   }
 
   this
-    .post(type + '/' + facade.action())
+    .post(type + '/' + msg.type())
     .query(settings.query || 'baz=foo')
     .set('Content-Type', header)
     .set('X-Key', settings.key)
