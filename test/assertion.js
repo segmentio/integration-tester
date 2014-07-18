@@ -43,6 +43,17 @@ describe('Assertion', function(){
     })
   })
 
+  describe('.name(name)', function(){
+    it('should not throw when the name is correct', function(){
+      Assertion(segment).name('Segment');
+    })
+
+    it('should throw when the name is incorrect', function(){
+      var a = Assertion(segment);
+      throws(a.name.bind(a, 'segment'), 'expected name to be "segment" but it\'s "Segment"');
+    })
+  })
+
   describe('.timeout(ms)', function(){
     beforeEach(function(){
       Segment.timeout(2000);
