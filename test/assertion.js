@@ -43,6 +43,18 @@ describe('Assertion', function(){
     })
   })
 
+  describe('.endpoint()', function(){
+    it('should not throw when given correct url', function(){
+      Assertion(segment).endpoint(segment.endpoint);
+    })
+
+    it('should throw on incorrect url', function(){
+      var a = Assertion(segment);
+      throws(a.endpoint.bind(a, 'foo'), "expected endpoint to be \"foo\" but it's \"http://localhost:3000/\"");
+      Assertion(segment).endpoint('foo');
+    })
+  })
+
   describe('.CHANNEL()', function(){
     it('should assert integration enabled correctly', function(){
       Assertion(segment).server();
