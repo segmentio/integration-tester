@@ -43,6 +43,26 @@ describe('Assertion', function(){
     })
   })
 
+  describe('.timeout(ms)', function(){
+    beforeEach(function(){
+      Segment.timeout(2000);
+      segment = new Segment();
+    })
+
+    it('should not thow when given correct timeout', function(){
+      Assertion(segment).timeout(2000);
+    })
+
+    it('should accept strings', function(){
+      Assertion(segment).timeout('2s');
+    })
+
+    it('should throw on incorrect timeout', function(){
+      var a = Assertion(segment);
+      throws(a.timeout.bind(a, 1), 'expected timeout to be "1" but it\'s "2000"');
+    })
+  })
+
   describe('.endpoint()', function(){
     it('should not throw when given correct url', function(){
       Assertion(segment).endpoint(segment.endpoint);
@@ -50,7 +70,7 @@ describe('Assertion', function(){
 
     it('should throw on incorrect url', function(){
       var a = Assertion(segment);
-      throws(a.endpoint.bind(a, 'foo'), "expected endpoint to be \"foo\" but it's \"http://localhost:3000/\"");
+      throws(a.endpoint.bind(a, 'foo'), 'expected endpoint to be "foo" but it\'s "http://localhost:3000/"');
     })
   })
 
