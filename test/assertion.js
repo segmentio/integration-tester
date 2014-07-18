@@ -54,11 +54,12 @@ describe('Assertion', function(){
         assert('id' == msg.userId());
         return true;
       };
-      assert(Assertion(segment).server({ userId: 'id' }));
+      Assertion(segment).server({ userId: 'id' });
     })
 
-    it('should return false if integration is not enabled on channel', function(){
-      assert(!Assertion(segment).mobile());
+    it('should throw if integration is not enabled on channel', function(){
+      var a = Assertion(segment);
+      throws(a.mobile.bind(a), 'expected integration to be enabled on "mobile"');
     })
 
     it('should accept facade instance', function(){
@@ -68,30 +69,37 @@ describe('Assertion', function(){
 
     it('should pick facade by `type` / `action`', function(){
       segment.enabled = function(msg){ return 'page' == msg.type(); };
-      assert(Assertion(segment).server({ type: 'page' }));
+      Assertion(segment).server({ type: 'page' });
     })
   })
 
   describe('.enabled(msg)', function(){
     it('should pass settings too', function(){
       segment.enabled = function(msg, conf){ return 1 == conf.setting; };
-      assert(Assertion(segment).set('setting', true).enabled({}));
+      Assertion(segment).set('setting', true).enabled({});
     })
 
     it('should accept facade instances', function(){
-      assert(Assertion(segment).enabled(new Track({ channel: 'server' })));
+      Assertion(segment).enabled(new Track({ channel: 'server' }));
+    })
+
+    it('should throw in case the integration is not enabled', function(){
+      segment.enabled = function(){ return false; };
+      var a = Assertion(segment);
+      throws(a.enabled.bind(a))
     })
   })
 
   describe('.all()', function(){
     it('should assert integration enabled on all channels', function(){
       segment.enabled = function(){ return true; };
-      assert(Assertion(segment).all());
+      Assertion(segment).all();
     })
 
     it('should throw if integration is not enabled on all channels', function(){
       segment.enabled = function(msg){ return 'server' == msg.channel(); };
-      assert(!Assertion(segment).all());
+      var a = Assertion(segment);
+      throws(a.all.bind(a), 'expected message to be enabled on all channels, but it is disabled on "client, mobile"');
     })
   })
 
@@ -281,4 +289,25 @@ function error(msg, done){
     assert.equal(err.message, msg);
     done();
   };
+}
+
+/**
+ * assert.throws() broken, doesn't compare messages.... :/
+ */
+
+function throws(fn, expected){
+  var actual;
+
+  try {
+    fn();
+  } catch (e) {
+    actual = e.message;
+  }
+
+  if (!expected) {
+    assert(actual, 'expected an error');
+    return;
+  }
+
+  assert.equal(actual, expected);
 }
