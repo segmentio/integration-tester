@@ -38,6 +38,23 @@ assert(integration)
 
   Initialize new Assertion with `integration`.
 
+##### .retries(n)
+
+  Assert retries are `n`.
+
+##### .timeout(ms)
+
+  Assert timeout is `ms`, where `ms` can be either a string (`2s`) or a number (`2000`).
+
+##### .name(name)
+
+  Assert name is `n`.
+
+##### .endpoint(url)
+
+  Assert endpoint is `url`.
+
+
 ##### query(obj)
 
   Add query.
@@ -85,15 +102,15 @@ assert(integration)
 
 ##### enabled(msg)
 
-  `true` if integration is enabled for `msg`
+  throws if the integration isn't enabled on `msg`.
 
 ##### disabled(msg)
 
-  `true` if integration is disabled for `msg`.
+  throws if the integration isn't disabled on `msg`.
 
 ##### CHANNEL(msg)
 
-  `true` if integration is enabled on `channel` with optional `msg`.
+  throws if the integration isn't enabled on `channel` with optional `msg`.
 
     // examples
     server();
@@ -102,7 +119,7 @@ assert(integration)
 
 ##### all()
 
-  `true` if integration is enabled on all channels.
+  throws if the integration isn't enabled on all channels.
 
 ## License
 

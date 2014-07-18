@@ -39,7 +39,65 @@ describe('Assertion', function(){
 
   describe('()', function(){
     it('should throw', function(){
-      Assertion.should.throw('expected integration');
+      assert.throws(Assertion, 'expected integration');
+    })
+  })
+
+  describe('.retries(n)', function(){
+    beforeEach(function(){
+      Segment.retries(2);
+      segment = new Segment();
+    })
+
+    it('should not throw when number of retries is correct', function(){
+      Assertion(segment).retries(2);
+    })
+
+    it('should throw when number of retries is incorrect', function(){
+      var a = Assertion(segment);
+      throws(a.retries.bind(a, 3), 'expected retries to be "3" but it\'s "2"');
+    })
+  })
+
+  describe('.name(name)', function(){
+    it('should not throw when the name is correct', function(){
+      Assertion(segment).name('Segment');
+    })
+
+    it('should throw when the name is incorrect', function(){
+      var a = Assertion(segment);
+      throws(a.name.bind(a, 'segment'), 'expected name to be "segment" but it\'s "Segment"');
+    })
+  })
+
+  describe('.timeout(ms)', function(){
+    beforeEach(function(){
+      Segment.timeout(2000);
+      segment = new Segment();
+    })
+
+    it('should not thow when given correct timeout', function(){
+      Assertion(segment).timeout(2000);
+    })
+
+    it('should accept strings', function(){
+      Assertion(segment).timeout('2s');
+    })
+
+    it('should throw on incorrect timeout', function(){
+      var a = Assertion(segment);
+      throws(a.timeout.bind(a, 1), 'expected timeout to be "1" but it\'s "2000"');
+    })
+  })
+
+  describe('.endpoint(url)', function(){
+    it('should not throw when given correct url', function(){
+      Assertion(segment).endpoint(segment.endpoint);
+    })
+
+    it('should throw on incorrect url', function(){
+      var a = Assertion(segment);
+      throws(a.endpoint.bind(a, 'foo'), 'expected endpoint to be "foo" but it\'s "http://localhost:3000/"');
     })
   })
 
@@ -54,11 +112,12 @@ describe('Assertion', function(){
         assert('id' == msg.userId());
         return true;
       };
-      assert(Assertion(segment).server({ userId: 'id' }));
+      Assertion(segment).server({ userId: 'id' });
     })
 
-    it('should return false if integration is not enabled on channel', function(){
-      assert(!Assertion(segment).mobile());
+    it('should throw if integration is not enabled on channel', function(){
+      var a = Assertion(segment);
+      throws(a.mobile.bind(a), 'expected integration to be enabled on "mobile"');
     })
 
     it('should accept facade instance', function(){
@@ -68,30 +127,37 @@ describe('Assertion', function(){
 
     it('should pick facade by `type` / `action`', function(){
       segment.enabled = function(msg){ return 'page' == msg.type(); };
-      assert(Assertion(segment).server({ type: 'page' }));
+      Assertion(segment).server({ type: 'page' });
     })
   })
 
   describe('.enabled(msg)', function(){
     it('should pass settings too', function(){
       segment.enabled = function(msg, conf){ return 1 == conf.setting; };
-      assert(Assertion(segment).set('setting', true).enabled({}));
+      Assertion(segment).set('setting', true).enabled({});
     })
 
     it('should accept facade instances', function(){
-      assert(Assertion(segment).enabled(new Track({ channel: 'server' })));
+      Assertion(segment).enabled(new Track({ channel: 'server' }));
+    })
+
+    it('should throw in case the integration is not enabled', function(){
+      segment.enabled = function(){ return false; };
+      var a = Assertion(segment);
+      throws(a.enabled.bind(a))
     })
   })
 
   describe('.all()', function(){
     it('should assert integration enabled on all channels', function(){
       segment.enabled = function(){ return true; };
-      assert(Assertion(segment).all());
+      Assertion(segment).all();
     })
 
     it('should throw if integration is not enabled on all channels', function(){
       segment.enabled = function(msg){ return 'server' == msg.channel(); };
-      assert(!Assertion(segment).all());
+      var a = Assertion(segment);
+      throws(a.all.bind(a), 'expected message to be enabled on all channels, but it is disabled on "client, mobile"');
     })
   })
 
@@ -278,7 +344,28 @@ describe('Assertion', function(){
 function error(msg, done){
   return function(err, res){
     if (!err) return done(new Error('expected an error'));
-    err.message.should.eql(msg);
+    assert.equal(err.message, msg);
     done();
   };
+}
+
+/**
+ * assert.throws() broken, doesn't compare messages.... :/
+ */
+
+function throws(fn, expected){
+  var actual;
+
+  try {
+    fn();
+  } catch (e) {
+    actual = e.message;
+  }
+
+  if (!expected) {
+    assert(actual, 'expected an error');
+    return;
+  }
+
+  assert.equal(actual, expected);
 }
