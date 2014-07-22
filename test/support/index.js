@@ -1,5 +1,12 @@
 
 /**
+ * Module dependencies.
+ */
+
+var assert = require('assert');
+var Batch = require('batch');
+
+/**
  * Respond with text
  */
 
@@ -53,4 +60,28 @@ exports.send = function(msg, settings, fn){
     .set('X-Key', settings.key)
     .send(payload)
     .end(fn);
+};
+
+/**
+ * Multi
+ */
+
+exports.multi = function(msg, settings, fn){
+  assert('number' == typeof settings.times, '.times must be a number');
+  var Message = msg.constructor;
+  var batch = new Batch;
+  var send = exports.send;
+  var self = this;
+
+  for (var i = 0; i < settings.times; ++i) {
+    batch.push(function(done){
+      send.apply(self, [
+        new Message(msg.json()),
+        settings,
+        done
+      ]);
+    });
+  }
+
+  batch.end(fn);
 };

@@ -38,6 +38,10 @@ assert(integration)
 
   Initialize new Assertion with `integration`.
 
+##### .requests(n)
+
+  Assert requests are `n`.
+
 ##### .retries(n)
 
   Assert retries are `n`.

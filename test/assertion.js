@@ -335,6 +335,24 @@ describe('Assertion', function(){
         .end(error('expected \'success=true\' to match /wee/', done));
     })
   })
+
+  describe('multi', function(){
+    beforeEach(function(){
+      Segment.prototype.track = support.multi;
+      segment = new Segment();
+    });
+
+    describe('.requests(n)', function(){
+      it('should succeed on match', function(done){
+        Assertion(segment)
+          .set('key', 'baz')
+          .set('times', 2)
+          .track({ userId: '1' })
+          .requests(2)
+          .end(done);
+      });
+    });
+  });
 })
 
 /**
