@@ -234,6 +234,18 @@ describe('Assertion', function(){
     })
   })
 
+  describe('.end(fn)', function(){
+    it('should supply (err, res)', function(done){
+      Assertion(segment)
+        .set('key', 'baz')
+        .identify({})
+        .end(function(err, res){
+          assert.equal('Response', res.constructor.name);
+          done();
+        });
+    });
+  });
+
   describe('.sends(value)', function(done){
     it('should assert sent object body correctly', function(done){
       var date = new Date;
