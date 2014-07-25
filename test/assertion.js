@@ -43,6 +43,25 @@ describe('Assertion', function(){
     })
   })
 
+  describe('.valid(msg, settings)', function(){
+    beforeEach(function(){
+      segment.validate = function(msg, settings){
+        if (msg.userId()) return;
+        return new Error('userId must be truthy.');
+      };
+    });
+
+    it('should not throw when the method doesnt return an error', function(){
+      Assertion(segment).valid({ userId: 1 });
+    });
+
+    it('should throw if the method returns an error', function(){
+      var a = Assertion(segment);
+      var valid = a.valid.bind(a, { userId: 0 });
+      throws(valid, 'userId must be truthy.');
+    });
+  });
+
   describe('.retries(n)', function(){
     beforeEach(function(){
       Segment.retries(2);

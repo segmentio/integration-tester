@@ -58,6 +58,9 @@ assert(integration)
 
   Assert endpoint is `url`.
 
+##### .valid(msg, settings)
+
+  Assert the integration is valid with `msg`, `settings`.
 
 ##### query(obj)
 
