@@ -62,6 +62,25 @@ describe('Assertion', function(){
     });
   });
 
+  describe('.invalid(msg, settings)', function(){
+    beforeEach(function(){
+      segment.validate = function(msg, settings){
+        if (msg.userId()) return;
+        return new Error('userId must be truthy.');
+      };
+    });
+
+    it('should throw when the method doesnt return an error', function(){
+      var a = Assertion(segment);
+      var invalid = a.invalid.bind(a, { userId: 1 });
+      throws(invalid, 'expected .validate(msg, settings) to return an error.');
+    });
+
+    it('should not throw if the method returns an error', function(){
+      Assertion(segment).invalid({ userId: 0 });
+    });
+  });
+
   describe('.retries(n)', function(){
     beforeEach(function(){
       Segment.retries(2);

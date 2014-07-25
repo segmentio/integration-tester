@@ -62,6 +62,10 @@ assert(integration)
 
   Assert the integration is valid with `msg`, `settings`.
 
+##### .invalid(msg, settings)
+
+  Assert the integration is invalid with `msg`, `settings`.
+
 ##### query(obj)
 
   Add query.
