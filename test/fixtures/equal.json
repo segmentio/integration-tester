@@ -1,0 +1,18 @@
+{
+  "input": {
+    "type": "identify",
+    "userId": "user-id",
+    "timestamp": "2014",
+    "properties": {
+      "prop": true
+    }
+  },
+  "output": {
+    "type": "identify",
+    "userId": "user-id",
+    "timestamp": 1388534400000,
+    "properties": {
+      "prop": true
+    }
+  }
+}
