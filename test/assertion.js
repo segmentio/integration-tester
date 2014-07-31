@@ -328,6 +328,14 @@ describe('Assertion', function(){
         .pathname('/json/track')
         .expects(200, done);
     });
+
+    it('should error on mismatch', function(done){
+      Assertion(segment)
+        .set('key', 'baz')
+        .track({})
+        .pathname('/json/trac')
+        .end(error('expected request pathname to be "/json/trac" but got "/json/track"', done));
+    });
   });
 
   describe('.expects(value)', function(done){
