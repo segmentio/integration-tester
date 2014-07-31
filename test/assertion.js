@@ -320,6 +320,16 @@ describe('Assertion', function(){
     })
   })
 
+  describe('.pathname(value)', function(){
+    it('should assert request path', function(done){
+      Assertion(segment)
+        .set('key', 'baz')
+        .track({})
+        .pathname('/json/track')
+        .expects(200, done);
+    });
+  });
+
   describe('.expects(value)', function(done){
     it('should assert status correctly', function(done){
       Assertion(segment)
