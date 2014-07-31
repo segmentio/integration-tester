@@ -58,6 +58,10 @@ assert(integration)
 
   Assert endpoint is `url`.
 
+##### .pathname(url)
+
+  Assert request pathname is `url`.
+
 ##### .valid(msg, settings)
 
   Assert the integration is valid with `msg`, `settings`.
