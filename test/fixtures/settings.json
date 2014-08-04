@@ -1,0 +1,15 @@
+{
+  "settings": {
+    "a": 0,
+    "b": 1,
+    "c": 3
+  },
+  "input": {
+    "type": "identify"
+  },
+  "output": {
+    "a": 0,
+    "b": 1,
+    "c": 3
+  }
+}

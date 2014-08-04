@@ -75,6 +75,14 @@ describe('Assertion', function(){
       assert.equal(true, err.showDiff, 'err must have .showDiff = true');
     });
 
+    it('should merge settings when available', function(){
+      segment.mapper.identify = function(_, s){ return s; };
+      Assertion(segment, __dirname).fixture('settings', {
+        a: 1,
+        b: 2
+      });
+    });
+
     it('should throw when the mapper is missing', function(){
       segment.mapper.identify = null;
       var a = Assertion(segment, __dirname);
