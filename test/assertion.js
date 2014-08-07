@@ -111,6 +111,23 @@ describe('Assertion', function(){
     });
   });
 
+  describe('.option(name, meta)', function(){
+    it('should not error when options match', function(){
+      var Segment = integration('Segment').option('opt', { required: true });
+      var segment = Segment();
+      Assertion(segment).option('opt', { required: true });
+    });
+
+    it('should error on mismatch', function(){
+      var Segment = integration('Segment').option('opt', { foo: 'baz' });
+      var segment = Segment();
+      var msg = 'expected { required: true } but got { foo: \'baz\' }';
+      throws(function(){
+        Assertion(segment).option('opt', { required: true });
+      }, msg);
+    });
+  });
+
   describe('.valid(msg, settings)', function(){
     beforeEach(function(){
       segment.validate = function(msg, settings){
