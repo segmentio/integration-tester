@@ -111,6 +111,38 @@ describe('Assertion', function(){
     });
   });
 
+  describe('.requires(method, path)', function(){
+    it('should not error when requirement is set', function(){
+      var Segment = integration('Segment').requires('userId');
+      var segment = Segment();
+      Assertion(segment).requires('userId');
+    });
+
+    it('should error on mismatch', function(){
+      var Segment = integration('Segment');
+      var segment = Segment();
+      var msg = 'expected integration to require "userId"';
+      throws(function(){
+        Assertion(segment).requires('userId');
+      }, msg);
+    });
+
+    it('should not error when method and path match', function(){
+      var Segment = integration('Segment').requires('identify', 'userId');
+      var segment = Segment();
+      Assertion(segment).requires('identify', 'userId');
+    });
+
+    it('should error on method/path mismatch', function(){
+      var Segment = integration('Segment').requires('track', 'userId');
+      var segment = Segment();
+      var msg = 'expected integration to require "userId" on "identify"';
+      throws(function(){
+        Assertion(segment).requires('identify', 'userId');
+      }, msg);
+    });
+  });
+
   describe('.option(name, meta)', function(){
     it('should not error when options match', function(){
       var Segment = integration('Segment').option('opt', { required: true });
