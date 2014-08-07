@@ -12,7 +12,7 @@
   "devDependencies": {
     "mocha": "*",
     "superagent": "*",
-    "segmentio-integration": "*",
+    "segmentio-integration": "git://github.com/segmentio/integration#refactor",
     "express": "3",
     "batch": "~0.5.1"
   }

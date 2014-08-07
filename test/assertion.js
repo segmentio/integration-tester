@@ -207,6 +207,22 @@ describe('Assertion', function(){
     })
   })
 
+  describe('.channels()', function(){
+    it('should assert integration is enabled on the given channels', function(){
+      var Segment = integration('Segment').channels(['client', 'server']);
+      var segment = Segment();
+      Assertion(segment).channels(['client', 'server']);
+    });
+
+    it('should throw on mismatch', function(){
+      var Segment = integration('Segment').channels(['server']);
+      var segment = Segment();
+      var a = Assertion(segment);
+      var chans = a.channels.bind(a, ['one', 'two']);
+      throws(chans, "expected [ 'one', 'two' ] but got [ 'server' ]");
+    });
+  });
+
   describe('.CHANNEL()', function(){
     it('should assert integration enabled correctly', function(){
       Assertion(segment).server();
