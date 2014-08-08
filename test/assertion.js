@@ -43,6 +43,14 @@ describe('Assertion', function(){
     })
   })
 
+  describe('.fixture(name)', function(){
+    it('should return a fixture by its name', function(){
+      var json = Assertion(segment, __dirname).fixture('equal');
+      assert(json.input);
+      assert(json.output);
+    });
+  });
+
   describe('.maps(name, settings)', function(){
     beforeEach(function(){
       var map = { identify: identify };
