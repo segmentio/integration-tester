@@ -43,7 +43,7 @@ describe('Assertion', function(){
     })
   })
 
-  describe('.fixture(name, settings)', function(){
+  describe('.maps(name, settings)', function(){
     beforeEach(function(){
       var map = { identify: identify };
       Segment = integration('Segment').mapper(map);
@@ -57,14 +57,14 @@ describe('Assertion', function(){
     })
 
     it('should not throw when input == output', function(){
-      Assertion(segment, __dirname).fixture('equal');
+      Assertion(segment, __dirname).maps('equal');
     });
 
     it('should throw an error when input != output', function(){
       var err;
 
       try {
-        Assertion(segment, __dirname).fixture('not-equal');
+        Assertion(segment, __dirname).maps('not-equal');
       } catch (e) {
         err = e;
       }
@@ -77,7 +77,7 @@ describe('Assertion', function(){
 
     it('should merge settings when available', function(){
       segment.mapper.identify = function(_, s){ return s; };
-      Assertion(segment, __dirname).fixture('settings', {
+      Assertion(segment, __dirname).maps('settings', {
         a: 1,
         b: 2
       });
@@ -86,14 +86,14 @@ describe('Assertion', function(){
     it('should throw when the mapper is missing', function(){
       segment.mapper.identify = null;
       var a = Assertion(segment, __dirname);
-      var fixture = a.fixture.bind(a, 'equal');
+      var fixture = a.maps.bind(a, 'equal');
       throws(fixture, 'integration.mapper.identify() is missing');
     });
 
     it('should throw when the mapper returns falsey value', function(){
       segment.mapper.identify = Function('return null');
       var a = Assertion(segment, __dirname);
-      var fixture = a.fixture.bind(a, 'equal');
+      var fixture = a.maps.bind(a, 'equal');
       throws(fixture, 'integration.mapper.identify() returned "null"')
     });
   });
