@@ -326,7 +326,7 @@ describe('Assertion', function(){
         .set({ key: 'baz' })
         .identify({})
         .query('foo', 'wee')
-        .end(error('', done));
+        .end(error('expected { foo: \'wee\' } but got { foo: \'baz\' }', done));
     });
   });
 
