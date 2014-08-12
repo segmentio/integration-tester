@@ -394,6 +394,14 @@ describe('Assertion', function(){
           done();
         });
     });
+
+    it('should supply err when the method is not implemented', function(done){
+      segment.identify = null;
+      Assertion(segment)
+        .set('key', 'baz')
+        .identify({})
+        .end(error('identify() is not implemented', done));
+    });
   });
 
   describe('.sends(value)', function(done){
