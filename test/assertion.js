@@ -299,7 +299,36 @@ describe('Assertion', function(){
         .query({ foo: 'baz', baz: 'foo' })
         .expects(200, done);
     })
+
+    it('should throw on mismatch', function(done){
+      Assertion(segment)
+        .set({ query: 'foo=baz' })
+        .set({ key: 'baz' })
+        .identify({})
+        .query({ foo: 'wee' })
+        .end(error('expected { foo: \'wee\' } but got { foo: \'baz\' }', done));
+    });
   })
+
+  describe('.query(key, value)', function(){
+    it('should assert sent query correctly', function(done){
+      Assertion(segment)
+        .set({ query: 'foo=baz' })
+        .set({ key: 'baz' })
+        .identify({})
+        .query('foo', 'baz')
+        .expects(200, done);
+    });
+
+    it('should error on mismatch', function(done){
+      Assertion(segment)
+        .set({ query: 'foo=baz' })
+        .set({ key: 'baz' })
+        .identify({})
+        .query('foo', 'wee')
+        .end(error('', done));
+    });
+  });
 
   describe('.sends(key, value)', function(){
     it('should assert sent headers correctly', function(done){
