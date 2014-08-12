@@ -402,6 +402,14 @@ describe('Assertion', function(){
         .identify({})
         .end(error('identify() is not implemented', done));
     });
+
+    it('should error if no requests were made', function(done){
+      segment.identify = function(_, _, fn){ fn(); };
+      Assertion(segment)
+        .set('key', 'baz')
+        .identify({})
+        .end(error('no request was created in identify()', done));
+    });
   });
 
   describe('.sends(value)', function(done){
