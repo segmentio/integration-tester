@@ -346,7 +346,7 @@ describe('Assertion', function(){
         .set({ key: 'baz' })
         .identify({})
         .query('foo', [1], JSON.parse)
-        .end(error('expected { foo: [ 1 ] } but got { foo: [1, 2, 3] }', done));
+        .end(error('expected { foo: [ 1 ] } but got { foo: [ 1, 2, 3 ] }', done));
     });
   });
 
