@@ -5,7 +5,7 @@
   "version": "0.1.1",
   "dependencies": {
     "ms": "^0.6.2",
-    "qs": "^0.6.6",
+    "qs": "^1.2.1",
     "segmentio-facade": "1.X"
   },
   "devDependencies": {
