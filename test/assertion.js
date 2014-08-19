@@ -30,7 +30,7 @@ describe('Assertion', function(){
     Segment.prototype.track = support.send;
     Segment.prototype.alias = support.send;
     Segment.prototype.page = support.send;
-    segment = Segment();
+    segment = Segment({});
   })
 
   after(function(){
@@ -593,7 +593,7 @@ describe('Assertion', function(){
   describe('multi', function(){
     beforeEach(function(){
       Segment.prototype.track = support.multi;
-      segment = new Segment();
+      segment = Segment({});
     });
 
     describe('.requests(n)', function(){
