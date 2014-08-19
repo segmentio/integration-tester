@@ -162,10 +162,8 @@ describe('Assertion', function(){
 
   describe('.valid(msg, settings)', function(){
     beforeEach(function(){
-      segment.validate = function(msg, settings){
-        if (msg.userId()) return;
-        return new Error('userId must be truthy.');
-      };
+      Segment.requires('userId');
+      // TODO: more tests
     });
 
     it('should not throw when the method doesnt return an error', function(){
@@ -175,16 +173,14 @@ describe('Assertion', function(){
     it('should throw if the method returns an error', function(){
       var a = Assertion(segment);
       var valid = a.valid.bind(a, { userId: 0 });
-      throws(valid, 'userId must be truthy.');
+      throws(valid, 'Segment: missing attribute "userId" in "track"');
     });
   });
 
   describe('.invalid(msg, settings)', function(){
     beforeEach(function(){
-      segment.validate = function(msg, settings){
-        if (msg.userId()) return;
-        return new Error('userId must be truthy.');
-      };
+      Segment.requires('userId');
+      // TODO: more tests
     });
 
     it('should throw when the method doesnt return an error', function(){
