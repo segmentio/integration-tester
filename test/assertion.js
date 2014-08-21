@@ -114,17 +114,23 @@ describe('Assertion', function(){
   describe('.valid(msg, settings)', function(){
     beforeEach(function(){
       Segment.ensure('message.userId');
-      // TODO: more tests
+      Segment.ensure('settings.apiKey');
     });
 
-    it('should not throw when the method doesnt return an error', function(){
-      Assertion(segment).valid({ userId: 1 });
+    it('should not throw if message.userId and settings.apiKey exists', function(){
+      Assertion(segment).valid({ userId: 1 }, { apiKey: 'key' });
     });
 
-    it('should throw if the method returns an error', function(){
+    it('should throw if message.userId is missing', function(){
       var a = Assertion(segment);
-      var valid = a.valid.bind(a, { userId: null });
+      var valid = a.valid.bind(a, {}, { apiKey: 'key' });
       throws(valid, 'Segment: message attribute "userId" is required');
+    });
+
+    it('should throw if settings.apiKey is missing', function(){
+      var a = Assertion(segment);
+      var valid = a.valid.bind(a, { userId: 0 });
+      throws(valid, 'Segment: setting "apiKey" is required');
     });
   });
 
