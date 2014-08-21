@@ -111,6 +111,35 @@ describe('Assertion', function(){
     });
   });
 
+  describe('.ensure(path)', function(){
+    beforeEach(function(){
+      Segment.ensure('message.userId');
+      Segment.ensure('settings.apiKey');
+      Segment.ensure('settings.token', { methods: ['track'] });
+    });
+
+    it('should throw if `path` is not ensured', function(){
+      var a = Assertion(segment);
+      var ensure = a.ensure.bind(a, 'settings.baz');
+      throws(ensure, 'expected integration to have validation for "settings.baz"');
+    });
+
+    it('should not throw if `path` is ensured', function(){
+      Assertion(segment).ensure('settings.apiKey');
+      Assertion(segment).ensure('message.userId');
+    });
+
+    it('should throw on `meta` mismatch', function(){
+      var a = Assertion(segment);
+      var ensure = a.ensure.bind(a, 'settings.token');
+      throws(ensure, 'validation meta mismatch {"methods":["track"]} deepEqual {}');
+    });
+
+    it('should not throw on `meta` match', function(){
+      Assertion(segment).ensure('settings.token', { methods: ['track'] });
+    });
+  });
+
   describe('.valid(msg, settings)', function(){
     beforeEach(function(){
       Segment.ensure('message.userId');
