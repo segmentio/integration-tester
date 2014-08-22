@@ -1,0 +1,12 @@
+{
+  "input": {
+    "type": "track",
+    "event": "Completed Order",
+    "properties": {
+      "orderId": "order-id"
+    }
+  },
+  "output": {
+    "orderId": "order-id"
+  }
+}

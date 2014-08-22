@@ -91,6 +91,11 @@ describe('Assertion', function(){
       });
     });
 
+    it('should map ecommerce events', function(){
+      segment.mapper.completedOrder = function(t){ return t.properties(); };
+      Assertion(segment, __dirname).maps('ecommerce');
+    });
+
     it('should throw when the mapper is missing', function(){
       segment.mapper.identify = null;
       var a = Assertion(segment, __dirname);
