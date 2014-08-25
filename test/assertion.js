@@ -109,6 +109,25 @@ describe('Assertion', function(){
       var fixture = a.maps.bind(a, 'equal');
       throws(fixture, 'integration.mapper.identify() returned "null"')
     });
+
+    it('should map ecommerce events', function(){
+      segment.mapper.completedOrder = function(t){ return t.properties(); };
+      Assertion(segment, __dirname).maps('ecommerce');
+    });
+
+    it('should throw when the mapper is missing', function(){
+      segment.mapper.identify = null;
+      var a = Assertion(segment, __dirname);
+      var fixture = a.maps.bind(a, 'equal');
+      throws(fixture, 'integration.mapper.identify() is missing');
+    });
+
+    it('should throw when the mapper returns falsey value', function(){
+      segment.mapper.identify = Function('return null');
+      var a = Assertion(segment, __dirname);
+      var fixture = a.maps.bind(a, 'equal');
+      throws(fixture, 'integration.mapper.identify() returned "null"')
+    });
   });
 
   describe('.ensure(path)', function(){
