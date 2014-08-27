@@ -5,6 +5,7 @@
   "version": "0.1.1",
   "dependencies": {
     "analytics-events": "^1.0.0",
+    "clone-component": "^0.2.2",
     "ms": "^0.6.2",
     "qs": "^0.6.6",
     "segmentio-facade": "1.X"
@@ -12,7 +13,7 @@
   "devDependencies": {
     "mocha": "*",
     "superagent": "*",
-    "segmentio-integration": "*",
+    "segmentio-integration": "git://github.com/segmentio/integration#refactor",
     "express": "3",
     "batch": "~0.5.1"
   }

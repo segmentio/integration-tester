@@ -30,7 +30,7 @@ describe('Assertion', function(){
     Segment.prototype.track = support.send;
     Segment.prototype.alias = support.send;
     Segment.prototype.page = support.send;
-    segment = Segment();
+    segment = Segment({});
   })
 
   after(function(){
@@ -109,33 +109,83 @@ describe('Assertion', function(){
       var fixture = a.maps.bind(a, 'equal');
       throws(fixture, 'integration.mapper.identify() returned "null"')
     });
+
+    it('should map ecommerce events', function(){
+      segment.mapper.completedOrder = function(t){ return t.properties(); };
+      Assertion(segment, __dirname).maps('ecommerce');
+    });
+
+    it('should throw when the mapper is missing', function(){
+      segment.mapper.identify = null;
+      var a = Assertion(segment, __dirname);
+      var fixture = a.maps.bind(a, 'equal');
+      throws(fixture, 'integration.mapper.identify() is missing');
+    });
+
+    it('should throw when the mapper returns falsey value', function(){
+      segment.mapper.identify = Function('return null');
+      var a = Assertion(segment, __dirname);
+      var fixture = a.maps.bind(a, 'equal');
+      throws(fixture, 'integration.mapper.identify() returned "null"')
+    });
+  });
+
+  describe('.ensure(path)', function(){
+    beforeEach(function(){
+      Segment.ensure('message.userId');
+      Segment.ensure('settings.apiKey');
+      Segment.ensure('settings.token', { methods: ['track'] });
+    });
+
+    it('should throw if `path` is not ensured', function(){
+      var a = Assertion(segment);
+      var ensure = a.ensure.bind(a, 'settings.baz');
+      throws(ensure, 'expected integration to have validation for "settings.baz"');
+    });
+
+    it('should not throw if `path` is ensured', function(){
+      Assertion(segment).ensure('settings.apiKey');
+      Assertion(segment).ensure('message.userId');
+    });
+
+    it('should throw on `meta` mismatch', function(){
+      var a = Assertion(segment);
+      var ensure = a.ensure.bind(a, 'settings.token');
+      throws(ensure, 'validation meta mismatch {"methods":["track"]} deepEqual {}');
+    });
+
+    it('should not throw on `meta` match', function(){
+      Assertion(segment).ensure('settings.token', { methods: ['track'] });
+    });
   });
 
   describe('.valid(msg, settings)', function(){
     beforeEach(function(){
-      segment.validate = function(msg, settings){
-        if (msg.userId()) return;
-        return new Error('userId must be truthy.');
-      };
+      Segment.ensure('message.userId');
+      Segment.ensure('settings.apiKey');
     });
 
-    it('should not throw when the method doesnt return an error', function(){
-      Assertion(segment).valid({ userId: 1 });
+    it('should not throw if message.userId and settings.apiKey exists', function(){
+      Assertion(segment).valid({ userId: 1 }, { apiKey: 'key' });
     });
 
-    it('should throw if the method returns an error', function(){
+    it('should throw if message.userId is missing', function(){
+      var a = Assertion(segment);
+      var valid = a.valid.bind(a, {}, { apiKey: 'key' });
+      throws(valid, 'Segment: message attribute "userId" is required');
+    });
+
+    it('should throw if settings.apiKey is missing', function(){
       var a = Assertion(segment);
       var valid = a.valid.bind(a, { userId: 0 });
-      throws(valid, 'userId must be truthy.');
+      throws(valid, 'Segment: setting "apiKey" is required');
     });
   });
 
   describe('.invalid(msg, settings)', function(){
     beforeEach(function(){
-      segment.validate = function(msg, settings){
-        if (msg.userId()) return;
-        return new Error('userId must be truthy.');
-      };
+      Segment.ensure('message.userId');
+      // TODO: more tests
     });
 
     it('should throw when the method doesnt return an error', function(){
@@ -145,7 +195,7 @@ describe('Assertion', function(){
     });
 
     it('should not throw if the method returns an error', function(){
-      Assertion(segment).invalid({ userId: 0 });
+      Assertion(segment).invalid({ userId: null });
     });
   });
 
@@ -207,65 +257,21 @@ describe('Assertion', function(){
     })
   })
 
-  describe('.CHANNEL()', function(){
-    it('should assert integration enabled correctly', function(){
-      Assertion(segment).server();
-    })
+  describe('.channels()', function(){
+    it('should assert integration is enabled on the given channels', function(){
+      var Segment = integration('Segment').channels(['client', 'server']);
+      var segment = Segment();
+      Assertion(segment).channels(['client', 'server']);
+    });
 
-    it('should respect optional `msg`', function(){
-      segment.enabled = function(msg){
-        assert('function' == typeof msg.action);
-        assert('id' == msg.userId());
-        return true;
-      };
-      Assertion(segment).server({ userId: 'id' });
-    })
-
-    it('should throw if integration is not enabled on channel', function(){
+    it('should throw on mismatch', function(){
+      var Segment = integration('Segment').channels(['server']);
+      var segment = Segment();
       var a = Assertion(segment);
-      throws(a.mobile.bind(a), 'expected integration to be enabled on "mobile"');
-    })
-
-    it('should accept facade instance', function(){
-      segment.enabled = function(msg){ return 'server' == msg.channel(); };
-      assert(Assertion(segment).server(new Track({})));
-    })
-
-    it('should pick facade by `type` / `action`', function(){
-      segment.enabled = function(msg){ return 'page' == msg.type(); };
-      Assertion(segment).server({ type: 'page' });
-    })
-  })
-
-  describe('.enabled(msg)', function(){
-    it('should pass settings too', function(){
-      segment.enabled = function(msg, conf){ return 1 == conf.setting; };
-      Assertion(segment).set('setting', true).enabled({});
-    })
-
-    it('should accept facade instances', function(){
-      Assertion(segment).enabled(new Track({ channel: 'server' }));
-    })
-
-    it('should throw in case the integration is not enabled', function(){
-      segment.enabled = function(){ return false; };
-      var a = Assertion(segment);
-      throws(a.enabled.bind(a))
-    })
-  })
-
-  describe('.all()', function(){
-    it('should assert integration enabled on all channels', function(){
-      segment.enabled = function(){ return true; };
-      Assertion(segment).all();
-    })
-
-    it('should throw if integration is not enabled on all channels', function(){
-      segment.enabled = function(msg){ return 'server' == msg.channel(); };
-      var a = Assertion(segment);
-      throws(a.all.bind(a), 'expected message to be enabled on all channels, but it is disabled on "client, mobile"');
-    })
-  })
+      var chans = a.channels.bind(a, ['one', 'two']);
+      throws(chans, "expected [ 'one', 'two' ] but got [ 'server' ]");
+    });
+  });
 
   describe('.error(fn)', function(){
     it('should assert integration error', function(done){
@@ -532,7 +538,7 @@ describe('Assertion', function(){
   describe('multi', function(){
     beforeEach(function(){
       Segment.prototype.track = support.multi;
-      segment = new Segment();
+      segment = Segment({});
     });
 
     describe('.requests(n)', function(){

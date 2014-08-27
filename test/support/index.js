@@ -35,7 +35,8 @@ exports.json = function(req, res){
  * Send
  */
 
-exports.send = function(msg, settings, fn){
+exports.send = function(msg, fn){
+  var settings = this.settings;
   var type = 'json';
   var header = 'application/json';
   var payload = msg.json();
@@ -66,18 +67,19 @@ exports.send = function(msg, settings, fn){
  * Multi
  */
 
-exports.multi = function(msg, settings, fn){
-  assert('number' == typeof settings.times, '.times must be a number');
+exports.multi = function(msg, fn){
+  var settings = this.settings;
   var Message = msg.constructor;
   var batch = new Batch;
   var send = exports.send;
   var self = this;
 
+  assert('number' == typeof settings.times, '.times must be a number');
+
   for (var i = 0; i < settings.times; ++i) {
     batch.push(function(done){
       send.apply(self, [
         new Message(msg.json()),
-        settings,
         done
       ]);
     });
