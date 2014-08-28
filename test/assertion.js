@@ -5,6 +5,7 @@ var support = require('./support');
 var express = require('express');
 var assert = require('assert');
 var Assertion = require('..');
+var util = require('util');
 var Track = facade.Track;
 
 describe('Assertion', function(){
@@ -396,12 +397,12 @@ describe('Assertion', function(){
   })
 
   describe('.end(fn)', function(){
-    it('should supply (err, res)', function(done){
+    it('should supply (err, responses)', function(done){
       Assertion(segment)
         .set('key', 'baz')
         .identify({})
         .end(function(err, res){
-          assert.equal('Response', res.constructor.name);
+          assert.equal('Array', res.constructor.name);
           done();
         });
     });
@@ -549,6 +550,96 @@ describe('Assertion', function(){
           .track({ userId: '1' })
           .requests(2)
           .end(done);
+      });
+    });
+
+    describe('.request(n)', function(){
+      it('should push assertion for request `n`', function(done){
+        var test = Assertion(segment);
+        var date = new Date;
+
+        test.set('key', 'baz');
+        test.set('times', 3);
+        test.requests(3);
+
+        // message
+        test.track({
+          userId: 'user-id',
+          timestamp: date
+        });
+
+        // 1
+        test
+          .request(0)
+          .sends({
+            context: { i: 0 },
+            key: 'baz',
+            timestamp: date,
+            type: 'track',
+            userId: 'user-id'
+          })
+          .expects(200)
+
+        // 2
+        test
+          .request(1)
+          .sends({
+            context: { i: 1 },
+            key: 'baz',
+            timestamp: date,
+            type: 'track',
+            userId: 'user-id'
+          })
+          .expects(200)
+
+        // 3
+        test
+          .request(2)
+          .sends({
+            context: { i: 2 },
+            key: 'baz',
+            timestamp: date,
+            type: 'track',
+            userId: 'user-id'
+          })
+          .expects(200)
+
+        test.end(done);
+      });
+
+      it('should abort on mismatch', function(done){
+        var test = Assertion(segment);
+        var date = new Date;
+
+        test.set('times', 3);
+        test.requests(3);
+
+        // message
+        test.track({
+          timestamp: date,
+          userId: 'user-id'
+        });
+
+        // 1
+        test
+          .request(0)
+          .sends({})
+          .expects(200);
+
+        // 2
+        test
+          .request(1)
+          .sends({})
+          .expects(200);
+
+        // end
+        test.end(error('expected {} but got ' + util.inspect({
+          timestamp: date,
+          userId: 'user-id',
+          type: 'track',
+          context: { i: 0 },
+          key: undefined
+        }), done));
       });
     });
   });
