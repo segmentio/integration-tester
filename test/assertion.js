@@ -293,6 +293,25 @@ describe('Assertion', function(){
     })
   })
 
+  describe('.error(msg, fn)', function(){
+    it('should assert the error message', function(done){
+      Assertion(segment)
+        .set({ handle: true })
+        .identify({})
+        .error('cannot POST /json/identify?baz=foo (400)', done);
+    });
+
+    it('should throw if error messages dont match', function(done){
+      Assertion(segment)
+        .set({ handle: true })
+        .identify({})
+        .error('msg', function(err){
+          assert('expected \'msg\' but got \'cannot POST /json/identify?baz=foo (400)\'' == err.message);
+          done();
+        });
+    });
+  });
+
   describe('.query(obj)', function(){
     it('should assert sent query correctly', function(done){
       Assertion(segment)
