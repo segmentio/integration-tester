@@ -77,12 +77,16 @@ exports.multi = function(msg, fn){
   assert('number' == typeof settings.times, '.times must be a number');
 
   for (var i = 0; i < settings.times; ++i) {
-    batch.push(function(done){
-      send.apply(self, [
-        new Message(msg.json()),
-        done
-      ]);
-    });
+    (function(i){
+      batch.push(function(done){
+        var json = msg.json();
+        json.context = { i: i };
+        send.apply(self, [
+          new Message(json),
+          done
+        ]);
+      });
+    })(i);
   }
 
   batch.end(fn);
