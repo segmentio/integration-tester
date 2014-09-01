@@ -1,4 +1,11 @@
 
+1.0.3 / 2014-09-01
+==================
+
+ * add response hack
+ * add .error(msg, fn) support
+ * add initial multi-request support
+
 1.0.2 / 2014-08-27
 ==================
 
