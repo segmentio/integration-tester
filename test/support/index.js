@@ -56,7 +56,7 @@ exports.send = function(msg, fn){
 
   this
     .post(type + '/' + msg.type())
-    .query(settings.query || 'baz=foo')
+    .query(settings.query || msg.proxy('context.q') || 'baz=foo')
     .set('Content-Type', header)
     .set('X-Key', settings.key)
     .send(payload)
@@ -80,7 +80,7 @@ exports.multi = function(msg, fn){
     (function(i){
       batch.push(function(done){
         var json = msg.json();
-        json.context = { i: i };
+        json.context = { i: i, q: 'foo=' + i };
         send.apply(self, [
           new Message(json),
           done

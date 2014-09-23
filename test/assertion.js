@@ -584,14 +584,15 @@ describe('Assertion', function(){
         // message
         test.track({
           userId: 'user-id',
-          timestamp: date
+          timestamp: date,
         });
 
         // 1
         test
           .request(0)
+          .query({ foo: '0' })
           .sends({
-            context: { i: 0 },
+            context: { i: 0, q: 'foo=0' },
             key: 'baz',
             timestamp: date,
             type: 'track',
@@ -602,8 +603,9 @@ describe('Assertion', function(){
         // 2
         test
           .request(1)
+          .query({ foo: '1' })
           .sends({
-            context: { i: 1 },
+            context: { i: 1, q: 'foo=1' },
             key: 'baz',
             timestamp: date,
             type: 'track',
@@ -614,8 +616,9 @@ describe('Assertion', function(){
         // 3
         test
           .request(2)
+          .query({ foo: '2' })
           .sends({
-            context: { i: 2 },
+            context: { i: 2, q: 'foo=2' },
             key: 'baz',
             timestamp: date,
             type: 'track',
@@ -656,7 +659,7 @@ describe('Assertion', function(){
           timestamp: date,
           userId: 'user-id',
           type: 'track',
-          context: { i: 0 },
+          context: { i: 0, q: 'foo=0' },
           key: undefined
         }), done));
       });
