@@ -7,7 +7,7 @@
     "analytics-events": "^1.0.0",
     "clone-component": "^0.2.2",
     "ms": "^0.6.2",
-    "qs": "^0.6.6",
+    "qs": "^1.2.1",
     "segmentio-facade": "1.X"
   },
   "devDependencies": {
