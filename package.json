@@ -8,7 +8,7 @@
     "clone-component": "^0.2.2",
     "ms": "^0.6.2",
     "qs": "^1.2.1",
-    "segmentio-facade": "1.X"
+    "segmentio-facade": "2.X"
   },
   "devDependencies": {
     "mocha": "*",
