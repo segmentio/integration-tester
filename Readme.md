@@ -54,6 +54,30 @@ assert(integration)
 
   Assert name is `n`.
 
+##### .request(n)
+
+  Test assertions for the `n`th request (0-indexed). For integrations which make
+  multiple requests, it's necessary to test the multiple requests for their
+  output individually.
+
+```js
+test
+  .set(settings)
+  .requests(2);
+
+test
+  .request(0)
+  .sends(firstPayload)
+  .expects(200);
+
+test
+  .request(1)
+  .sends(secondPayload)
+  .expects(200);
+
+test.end(done);
+```
+
 ##### .endpoint(url)
 
   Assert endpoint is `url`.
