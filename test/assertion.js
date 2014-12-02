@@ -44,6 +44,18 @@ describe('Assertion', function(){
     })
   })
 
+  describe('method not implemented', function(){
+    it('should error when a method isnt implemented', function(done){
+      segment.track = null;
+      Assertion(segment)
+        .track({})
+        .end(function(err){
+          assert.equal(err.message, 'track() is not implemented');
+          done();
+        });
+    })
+  })
+
   describe('.fixture(name)', function(){
     it('should return a fixture by its name', function(){
       var json = Assertion(segment, __dirname).fixture('equal');
