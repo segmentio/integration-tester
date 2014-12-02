@@ -1,4 +1,9 @@
 
+1.0.6 / 2014-12-02
+==================
+
+  * method(): make sure an error is thrown when a method isnt implemented
+
 1.0.5 / 2014-10-03
 ==================
 
