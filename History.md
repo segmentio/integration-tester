@@ -1,4 +1,9 @@
 
+1.0.7 / 2014-12-03
+==================
+
+  * facade: pass clone: false, traverse: false by default
+
 1.0.6 / 2014-12-02
 ==================
 
