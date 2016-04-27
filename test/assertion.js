@@ -423,7 +423,7 @@ describe('Assertion', function(){
         .set('key', 'baz')
         .sends('Content-Type', 'application/json')
         .expects(200, done);
-    })
+    });
 
     it('should accept regexp as header value', function(done){
       Assertion(segment)
@@ -431,7 +431,7 @@ describe('Assertion', function(){
         .set('key', 'baz')
         .sends('Content-Type', /json/)
         .expects(200, done);
-    })
+    });
 
     it('should error if header doesnt match', function(done){
       Assertion(segment)
@@ -439,7 +439,7 @@ describe('Assertion', function(){
         .set('key', 'baz')
         .sends('Content-Type', 'baz')
         .end(error('expected header \'Content-Type\': \'application/json\' to match \'baz\'', done));
-    })
+    });
 
     it('should error if regexp header doesnt match', function(done){
       Assertion(segment)
@@ -447,38 +447,18 @@ describe('Assertion', function(){
         .set('key', 'baz')
         .sends('Content-Type', /baz/)
         .end(error('expected header \'Content-Type\': \'application/json\' to match /baz/', done));
-    })
-  })
-
-  describe('.end(fn)', function(){
-    it('should supply (err, responses)', function(done){
-      Assertion(segment)
-        .set('key', 'baz')
-        .identify({})
-        .end(function(err, res){
-          assert.equal('Array', res.constructor.name);
-          done();
-        });
-    });
-
-    it('should supply err when the method is not implemented', function(done){
-      segment.identify = null;
-      Assertion(segment)
-        .set('key', 'baz')
-        .identify({})
-        .end(error('identify() is not implemented', done));
     });
   });
 
   describe('.sends(value)', function(done){
     it('should assert sent object body correctly', function(done){
-      var date = new Date;
+      var date = new Date();
       Assertion(segment)
         .identify({ userId: 1, timestamp: date })
         .set('key', 'baz')
         .sends({ userId: 1, key: 'baz', timestamp: date, type: 'identify' })
         .expects(200, done);
-    })
+    });
 
     it('should assert querystring correctly', function(done){
       Assertion(segment)
@@ -486,7 +466,7 @@ describe('Assertion', function(){
         .set('key', 'baz')
         .sends('?baz')
         .expects(200, done);
-    })
+    });
 
     it('should error on querystring mismatch', function(done){
       Assertion(segment)
@@ -494,7 +474,7 @@ describe('Assertion', function(){
         .set('key', 'baz')
         .sends('?baz=wee')
         .end(error('expected \'baz=foo\' to include \'baz=wee\'', done));
-    })
+    });
 
     it('should assert regexp request correctly', function(done){
       Assertion(segment)
@@ -503,8 +483,37 @@ describe('Assertion', function(){
         .group({})
         .sends(/baz/)
         .expects(200, done);
-    })
-  })
+    });
+  });
+
+  describe('.sendsAlmost(value, options)', function(done){
+    it('should assert exact sent object body correctly', function(done){
+      var date = new Date();
+      Assertion(segment)
+        .identify({ userId: 1, timestamp: date })
+        .set('key', 'baz')
+        .sendsAlmost({ userId: 1, key: 'baz', timestamp: date, type: 'identify' })
+        .expects(200, done);
+    });
+
+    it('should throw on missing non-ignored keys', function(done){
+      var date = new Date();
+      Assertion(segment)
+        .identify({ userId: 1, timestamp: date })
+        .set('key', 'baz')
+        .sendsAlmost({ userId: 1, timestamp: date, type: 'identify' })
+        .end(error(done));
+    });
+
+    it('should not throw on missing ignored keys', function(done){
+      var date = new Date();
+      Assertion(segment)
+        .identify({ userId: 1, timestamp: date })
+        .set('key', 'baz')
+        .sendsAlmost({ userId: 1, type: 'identify' }, {ignored: ['timestamp', 'key']})
+        .expects(200, done);
+    });
+  });
 
   describe('.pathname(value)', function(){
     it('should assert request path', function(done){
@@ -707,9 +716,10 @@ describe('Assertion', function(){
  */
 
 function error(msg, done){
+  if (1 == arguments.length) done = msg, msg = null;
   return function(err, res){
     if (!err) return done(new Error('expected an error'));
-    assert.equal(err.message, msg);
+    if (msg) assert.equal(err.message, msg);
     done();
   };
 }

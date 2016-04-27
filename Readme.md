@@ -121,6 +121,17 @@ test.end(done);
     sends('?query=string');
     sends('baz=foo');
 
+##### sendsAlmost(obj, options)
+
+  Assert integration sends `obj` -- modulo some options.
+  `options` can include
+  - `ignored`: Array of keys to ignore if they are also sent
+
+
+    // examples
+    sendsAlmost({ baz: 'foo' }, {'ignored': ['foo']});
+    // this will be fine if we send { baz: 'foo', foo: 'bar'};
+
 ##### expects(...)
 
   Assert integration expects `...`
@@ -163,4 +174,3 @@ test.end(done);
 ## License
 
   (MIT)
-
