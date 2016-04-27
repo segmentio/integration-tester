@@ -64,7 +64,7 @@ describe('Assertion', function(){
     });
   });
 
-  describe('.maps(name, settings)', function(){
+  describe('.maps(name, settings, options)', function(){
     beforeEach(function(){
       var map = { identify: identify };
       Segment = integration('Segment').mapper(map);
@@ -86,6 +86,29 @@ describe('Assertion', function(){
 
       try {
         Assertion(segment, __dirname).maps('not-equal');
+      } catch (e) {
+        err = e;
+      }
+
+      assert(err, 'expected integration to throw');
+      assert(err.actual, 'err must have .actual');
+      assert(err.expected, 'err must have .expected');
+      assert.equal(true, err.showDiff, 'err must have .showDiff = true');
+    });
+
+    it('should not throw an error when only differing value ignored', function(){
+      Assertion(segment, __dirname).maps('not-equal', {}, {'ignored': ['timestamp']});
+    });
+
+    it('should not throw an error when values ignored recursively', function(){
+      Assertion(segment, __dirname).maps('ignore-array-keys', {}, {'ignored': ['color', 'timestamp']});
+    });
+
+    it('should throw an error when ignoring values doesnt catch all errors', function(){
+      var err;
+
+      try {
+        Assertion(segment, __dirname).maps('ignore-array-keys', {}, {'ignored': ['house', 'timestamp']});
       } catch (e) {
         err = e;
       }
