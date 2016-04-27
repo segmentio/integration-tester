@@ -96,6 +96,10 @@ describe('Assertion', function(){
       assert.equal(true, err.showDiff, 'err must have .showDiff = true');
     });
 
+    it('should not throw an error when only differing value ignored', function(){
+      Assertion(segment, __dirname).maps('not-equal', {}, {'ignored': ['timestamp']});
+    });
+
     it('should merge settings when available', function(){
       segment.mapper.identify = function(_, s){ return s; };
       Assertion(segment, __dirname).maps('settings', {
