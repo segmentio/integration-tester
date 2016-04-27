@@ -1,0 +1,50 @@
+{
+  "input": {
+    "type": "identify",
+    "userId": "user-id",
+    "properties": {
+      "prop": true
+    },
+    "otherStuff": [
+      {
+        "house": "stark",
+        "color": "white"
+      },
+      {
+        "house": "lannister",
+        "color": "red"
+      },
+      {
+        "house": "baratheon",
+        "color": "yellow"
+      },
+      {
+        "house": "tyrell",
+        "color": "green"
+      }
+    ],
+    "rawArrayKeys": ["color", "others"]
+  },
+  "output": {
+    "type": "identify",
+    "userId": "user-id",
+    "properties": {
+      "prop": true
+    },
+    "otherStuff": [
+      {
+        "house": "stark"
+      },
+      {
+        "house": "lannister"
+      },
+      {
+        "house": "baratheon"
+      },
+      {
+        "house": "tyrell"
+      }
+    ],
+    "rawArrayKeys": ["others"]
+  }
+}
