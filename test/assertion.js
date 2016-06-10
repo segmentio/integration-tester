@@ -127,9 +127,14 @@ describe('Assertion', function(){
       });
     });
 
-    it('should map ecommerce events', function(){
-      segment.mapper.completedOrder = function(t){ return t.properties(); };
+    it('should map actionObject ecommerce events', function(){
+      segment.mapper.orderCompleted = function(t){ return t.properties(); };
       Assertion(segment, __dirname).maps('ecommerce');
+    });
+
+    it('should map objectAction ecommerce events', function(){
+      segment.mapper.orderCompleted = function(t){ return t.properties(); };
+      Assertion(segment, __dirname).maps('ecommerce-object-action');
     });
 
     it('should throw when the mapper is missing', function(){
@@ -144,11 +149,6 @@ describe('Assertion', function(){
       var a = Assertion(segment, __dirname);
       var fixture = a.maps.bind(a, 'equal');
       throws(fixture, 'integration.mapper.identify() returned "null"')
-    });
-
-    it('should map ecommerce events', function(){
-      segment.mapper.completedOrder = function(t){ return t.properties(); };
-      Assertion(segment, __dirname).maps('ecommerce');
     });
 
     it('should throw when the mapper is missing', function(){

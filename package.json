@@ -4,7 +4,7 @@
   "description": "integration tester",
   "version": "1.1.0",
   "dependencies": {
-    "analytics-events": "^1.0.0",
+    "analytics-events": "^2.0.0",
     "clone-component": "^0.2.2",
     "ms": "^0.6.2",
     "qs": "^1.2.1",
