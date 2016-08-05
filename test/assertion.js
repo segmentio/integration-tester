@@ -187,7 +187,7 @@ describe('Assertion', function(){
     it('should throw on `meta` mismatch', function(){
       var a = Assertion(segment);
       var ensure = a.ensure.bind(a, 'settings.token');
-      throws(ensure, "validation meta mismatch { methods: [ 'track' ] } deepEqual {}");
+      throws(ensure, 'validation meta mismatch {"methods":["track"]} deepEqual {}');
     });
 
     it('should not throw on `meta` match', function(){
