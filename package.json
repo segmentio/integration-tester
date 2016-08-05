@@ -8,12 +8,12 @@
     "clone-component": "^0.2.2",
     "ms": "^0.6.2",
     "qs": "^1.2.1",
-    "segmentio-facade": "2.X"
+    "segmentio-facade": "^3.0.0"
   },
   "devDependencies": {
     "mocha": "*",
     "superagent": "*",
-    "segmentio-integration": "2.x",
+    "segmentio-integration": "^4.0.0",
     "express": "3",
     "batch": "~0.5.1"
   }
