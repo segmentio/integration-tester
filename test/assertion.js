@@ -128,7 +128,7 @@ describe('Assertion', function(){
     });
 
     it('should map ecommerce events', function(){
-      segment.mapper.completedOrder = function(t){ return t.properties(); };
+      segment.mapper.orderCompleted = function(t){ return t.properties(); };
       Assertion(segment, __dirname).maps('ecommerce');
     });
 
@@ -147,7 +147,7 @@ describe('Assertion', function(){
     });
 
     it('should map ecommerce events', function(){
-      segment.mapper.completedOrder = function(t){ return t.properties(); };
+      segment.mapper.orderCompleted = function(t){ return t.properties(); };
       Assertion(segment, __dirname).maps('ecommerce');
     });
 
@@ -187,11 +187,11 @@ describe('Assertion', function(){
     it('should throw on `meta` mismatch', function(){
       var a = Assertion(segment);
       var ensure = a.ensure.bind(a, 'settings.token');
-      throws(ensure, 'validation meta mismatch {"methods":["track"]} deepEqual {}');
+      throws(ensure, "validation meta mismatch { methods: [ 'track' ] } deepEqual {}");
     });
 
     it('should not throw on `meta` match', function(){
-      Assertion(segment).ensure('settings.token', { methods: ['track'] });
+      Assertion(segment).ensure('settings.token', { methods: [ 'track' ] });
     });
   });
 
@@ -208,13 +208,13 @@ describe('Assertion', function(){
     it('should throw if message.userId is missing', function(){
       var a = Assertion(segment);
       var valid = a.valid.bind(a, {}, { apiKey: 'key' });
-      throws(valid, 'Segment: message attribute "userId" is required');
+      throws(valid, 'message attribute "userId" is required');
     });
 
     it('should throw if settings.apiKey is missing', function(){
       var a = Assertion(segment);
       var valid = a.valid.bind(a, { userId: 0 });
-      throws(valid, 'Segment: setting "apiKey" is required');
+      throws(valid, 'setting "apiKey" is required');
     });
   });
 

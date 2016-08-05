@@ -1,7 +1,7 @@
 {
   "input": {
     "type": "track",
-    "event": "Completed Order",
+    "event": "Order Completed",
     "properties": {
       "orderId": "order-id"
     }
