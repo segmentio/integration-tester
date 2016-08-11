@@ -460,6 +460,15 @@ describe('Assertion', function(){
         .expects(200, done);
     });
 
+    it('should fail when object body is is incorrect', function(done){
+      var date = new Date();
+      Assertion(segment)
+        .identify({ userId: 2, timestamp: date })
+        .set('key', 'baz')
+        .sends({ userId: 1, key: 'baz', timestamp: date, type: 'identify' })
+        .end(error(done));
+    });
+
     it('should assert querystring correctly', function(done){
       Assertion(segment)
         .identify({ userId: 1 })
