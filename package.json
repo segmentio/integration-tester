@@ -2,7 +2,7 @@
   "name": "segmentio-integration-tester",
   "repo": "segmentio/integration-tester",
   "description": "integration tester",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "dependencies": {
     "analytics-events": "^2.0.0",
     "clone-component": "^0.2.2",

@@ -1,4 +1,10 @@
 
+2.0.2 / 2016-09-12
+==================
+
+  * Ensure there are no assertions on requests that weren't made (#35)
+  * Add sends negative test case (#34)
+
 2.0.1 / 2016-06-10
 ==================
 
