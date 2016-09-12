@@ -685,6 +685,28 @@ describe('Assertion', function(){
         test.end(done);
       });
 
+      it('should error if there are assertions on requests that were not made', function(done) {
+        var test = Assertion(segment);
+        var date = new Date;
+
+        test.set('key', 'baz');
+        test.set('times', 3);
+        test.requests(3);
+
+        // message
+        test.track({
+          userId: 'user-id',
+          timestamp: date,
+        });
+
+        test
+          .request(3)
+          .query({ foo: '3' })
+          .expects(200);
+
+        test.end(error('Assertions made for 4 requests but only 3 requests were made', done));
+      });
+
       // figure out proper behavior
       it.skip('should abort on mismatch', function(done){
         var test = Assertion(segment);
