@@ -626,6 +626,15 @@ describe('Assertion', function(){
           .requests(2)
           .end(done);
       });
+
+      it('should allow checking for no requests to be sent', function(done) {
+        Assertion(segment)
+          .set('key', 'baz')
+          .set('times', 0)
+          .track({ userId: '1' })
+          .requests(0)
+          .end(done);
+      });
     });
 
     describe('.request(n)', function(){
