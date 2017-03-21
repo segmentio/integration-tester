@@ -1,4 +1,10 @@
 
+2.1.0 / 2017-03-21
+==================
+
+  * assertion: add support for asserting on error `msg` and `status` (#40)
+  * assertion: add support for checking `err.status`
+
 2.0.4 / 2017-03-21
 ==================
 
