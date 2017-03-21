@@ -336,7 +336,7 @@ describe('Assertion', function(){
         .error('cannot POST /json/identify?baz=foo (400)', done);
     });
 
-    it('should throw if error messages dont match', function(done){
+    it('should throw if error messages does not match', function(done){
       Assertion(segment)
         .set({ handle: true })
         .identify({})
@@ -355,7 +355,7 @@ describe('Assertion', function(){
         .error(400, done)
     });
 
-    it('should throw if error status dont match', function(done){
+    it('should throw if error status does not match', function(done){
       Assertion(segment)
         .set({ handle: true })
         .identify({})
@@ -374,7 +374,7 @@ describe('Assertion', function(){
         .error(400, 'cannot POST /json/identify?baz=foo (400)', done)
     })
 
-    it('should throw if error message dont match', function(done){
+    it('should throw if error message does not match', function(done){
       Assertion(segment)
         .set({ handle: true })
         .identify({})
@@ -384,7 +384,7 @@ describe('Assertion', function(){
         })
     })
 
-    it('should throw if error status dont match', function(done){
+    it('should throw if error status does not match', function(done){
       Assertion(segment)
         .set({ handle: true })
         .identify({})
