@@ -1,7 +1,13 @@
 machine:
   node:
-    version: 0.10.26
+    version: 6
 
 dependencies:
   pre:
-    - npm install -g npm@2
+    - npm config set "//registry.npmjs.org/:_authToken" $NPM_AUTH
+  override:
+    - make node_modules
+
+test:
+  override:
+    - make test
