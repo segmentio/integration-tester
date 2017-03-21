@@ -1,4 +1,13 @@
 
+2.0.4 / 2017-03-21
+==================
+
+  * circle: auto-publish tags to npm
+  * package: pin mocha & superagent
+  * test: fix "meta mismatch" assertion
+  * test: fix invalid `req.set()` usage
+  * circle: test with node 6
+
 2.0.3 / 2016-09-15
 ==================
 
