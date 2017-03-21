@@ -347,6 +347,25 @@ describe('Assertion', function(){
     });
   });
 
+  describe('.error(status, fn)', function(){
+    it('should assert the error status', function(done){
+      Assertion(segment)
+        .set({ handle: true })
+        .identify({})
+        .error(400, done)
+    });
+
+    it('should throw if error status dont match', function(done){
+      Assertion(segment)
+        .set({ handle: true })
+        .identify({})
+        .error(123, function(err){
+          assert.equal(err.message, 'expected 123 but got 400')
+          done();
+        });
+    });
+  });
+
   describe('.query(obj)', function(){
     it('should assert sent query correctly', function(done){
       Assertion(segment)
