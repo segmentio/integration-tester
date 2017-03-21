@@ -336,7 +336,7 @@ describe('Assertion', function(){
         .error('cannot POST /json/identify?baz=foo (400)', done);
     });
 
-    it('should throw if error messages dont match', function(done){
+    it('should throw if error messages does not match', function(done){
       Assertion(segment)
         .set({ handle: true })
         .identify({})
@@ -355,13 +355,42 @@ describe('Assertion', function(){
         .error(400, done)
     });
 
-    it('should throw if error status dont match', function(done){
+    it('should throw if error status does not match', function(done){
       Assertion(segment)
         .set({ handle: true })
         .identify({})
         .error(123, function(err){
           assert.equal(err.message, 'expected 123 but got 400')
           done();
+        });
+    });
+  });
+
+  describe('.error(status, msg, fn)', function(){
+    it('should assert the error message', function(done){
+      Assertion(segment)
+        .set({ handle: true })
+        .identify({})
+        .error(400, 'cannot POST /json/identify?baz=foo (400)', done)
+    })
+
+    it('should throw if error message does not match', function(done){
+      Assertion(segment)
+        .set({ handle: true })
+        .identify({})
+        .error(400, 'something exploded', function(err){
+          assert.equal(err.message, 'expected \'something exploded\' but got \'cannot POST /json/identify?baz=foo (400)\'')
+          done()
+        })
+    })
+
+    it('should throw if error status does not match', function(done){
+      Assertion(segment)
+        .set({ handle: true })
+        .identify({})
+        .error(123, 'cannot POST /json/identify?baz=foo (400)', function(err){
+          assert.equal(err.message, 'expected 123 but got 400')
+          done()
         });
     });
   });
