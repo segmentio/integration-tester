@@ -366,6 +366,36 @@ describe('Assertion', function(){
     });
   });
 
+  describe('.error(status, msg, fn)', function(){
+    it('should assert the error message', function(done){
+      Assertion(segment)
+        .set({ handle: true })
+        .identify({})
+        .error(400, 'cannot POST /json/identify?baz=foo (400)', done)
+    })
+
+    it('should throw if error status dont match', function(done){
+      Assertion(segment)
+        .set({ handle: true })
+        .identify({})
+        .error(400, 'something exploded', function(err){
+          assert.equal(err.message, 'expected \'something exploded\' but got \'cannot POST /json/identify?baz=foo (400)\'')
+          done()
+        })
+    })
+
+    it('should throw if error status dont match', function(done){
+      Assertion(segment)
+        .set({ handle: true })
+        .identify({})
+        .error(123, 'cannot POST /json/identify?baz=foo (400)', function(err){
+          console.log(err)
+          assert.equal(err.message, 'expected 123 but got 400')
+          done()
+        });
+    });
+  });
+
   describe('.query(obj)', function(){
     it('should assert sent query correctly', function(done){
       Assertion(segment)
