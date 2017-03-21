@@ -54,11 +54,16 @@ exports.send = function(msg, fn){
     type = 'text';
   }
 
-  this
+  var req = this
     .post(type + '/' + msg.type())
     .query(settings.query || msg.proxy('context.q') || 'baz=foo')
     .set('Content-Type', header)
-    .set('X-Key', settings.key)
+
+  if (settings.key) {
+    req.set('X-Key', settings.key)
+  }
+
+  req
     .send(payload)
     .end(fn);
 };
