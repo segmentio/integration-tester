@@ -389,7 +389,6 @@ describe('Assertion', function(){
         .set({ handle: true })
         .identify({})
         .error(123, 'cannot POST /json/identify?baz=foo (400)', function(err){
-          console.log(err)
           assert.equal(err.message, 'expected 123 but got 400')
           done()
         });
