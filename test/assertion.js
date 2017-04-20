@@ -464,6 +464,46 @@ describe('Assertion', function(){
     });
   });
 
+  describe('.queryAlmost(obj)', function(){
+    it('should assert sent query correctly', function(done){
+      Assertion(segment)
+        .set({ query: 'foo=baz&baz=foo' })
+        .set({ key: 'baz' })
+        .identify({})
+        .queryAlmost({ foo: 'baz' })
+        .expects(200, done);
+    })
+
+    it('should throw on no match', function(done){
+      Assertion(segment)
+        .set({ query: 'foo=baz&yolo=yup&bar=foo' })
+        .set({ key: 'baz' })
+        .identify({})
+        .queryAlmost({ foo: 'wee' })
+        .end(error('expected { foo: \'wee\' } to exist in { foo: \'baz\', yolo: \'yup\', bar: \'foo\' }', done));
+    });
+  })
+
+  describe('.queryAlmost(key, value)', function(){
+    it('should assert sent query correctly', function(done){
+      Assertion(segment)
+        .set({ query: 'foo=baz&baz=foo' })
+        .set({ key: 'baz' })
+        .identify({})
+        .queryAlmost('foo', 'baz')
+        .expects(200, done);
+    })
+
+    it('should throw on no match', function(done){
+      Assertion(segment)
+        .set({ query: 'foo=baz&yolo=yup&bar=foo' })
+        .set({ key: 'baz' })
+        .identify({})
+        .queryAlmost('foo', 'wee')
+        .end(error('expected { foo: \'wee\' } to exist in { foo: \'baz\', yolo: \'yup\', bar: \'foo\' }', done));
+    });
+  })
+
   describe('.sends(key, value)', function(){
     it('should assert sent headers correctly', function(done){
       Assertion(segment)
