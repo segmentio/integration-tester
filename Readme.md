@@ -132,6 +132,20 @@ test.end(done);
     sendsAlmost({ baz: 'foo' }, {'ignored': ['foo']});
     // this will be fine if we send { baz: 'foo', foo: 'bar'};
 
+##### queryAmost(obj || key, value, parse)
+
+Checks to see if the request query string contained key/value (pairs). A parse function can be passed to be run on the query string value before comparison.
+
+```
+// examples
+Assertion(segment)
+  .set({ query: 'foo=baz&baz=foo' })
+  .set({ key: 'baz' })
+  .identify({})
+  .queryAlmost({ foo: 'baz' })
+  .expects(200, done);
+```
+
 ##### expects(...)
 
   Assert integration expects `...`
