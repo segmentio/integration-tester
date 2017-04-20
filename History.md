@@ -1,3 +1,7 @@
+2.1.0 / 2017-03-21
+==================
+
+  * assertion: add support for checking if request query includes specified key/value pair(s)
 
 2.1.0 / 2017-03-21
 ==================
