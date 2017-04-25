@@ -402,7 +402,19 @@ describe('Assertion', function(){
         .set({ key: 'baz' })
         .identify({})
         .query({ foo: 'baz' })
-        .expects(200, done);
+        .expects(200, done)
+    })
+
+    it('should not add new, undefined parameters to the actual query string', function(done){
+      Assertion(segment)
+        .set({ query: 'foo=baz' })
+        .set({ key: 'baz' })
+        .identify({})
+        .query({ totallyDifferentThing: 'foobar' })
+        .end(function(err){
+          assert.deepEqual(err.actual, { foo: 'baz' });
+          done()
+      })
     })
 
     it('should buffer arguments', function(done){
@@ -434,6 +446,18 @@ describe('Assertion', function(){
         .expects(200, done);
     });
 
+    it('should not add new, undefined parameters to the actual query string', function(done){
+      Assertion(segment)
+        .set({ query: 'foo=baz' })
+        .set({ key: 'baz' })
+        .identify({})
+        .query({ totallyDifferentThing: 'foobar' })
+        .end(function(err){
+          assert.deepEqual(err.actual, { foo: 'baz' });
+          done()
+      })
+    })
+
     it('should error on mismatch', function(done){
       Assertion(segment)
         .set({ query: 'foo=baz' })
@@ -453,6 +477,18 @@ describe('Assertion', function(){
         .query('foo', [1, 2, 3], JSON.parse)
         .expects(200, done);
     });
+
+    it('should not add new, undefined parameters to the actual query string', function(done){
+      Assertion(segment)
+        .set({ query: 'foo=baz' })
+        .set({ key: 'baz' })
+        .identify({})
+        .query({ totallyDifferentThing: 'foobar' })
+        .end(function(err){
+          assert.deepEqual(err.actual, { foo: 'baz' });
+          done()
+      })
+    })
 
     it('should error on mismatch', function(done){
       Assertion(segment)
@@ -474,6 +510,18 @@ describe('Assertion', function(){
         .expects(200, done);
     })
 
+    it('should not add new, undefined parameters to the actual query string', function(done){
+      Assertion(segment)
+        .set({ query: 'foo=baz' })
+        .set({ key: 'baz' })
+        .identify({})
+        .query({ totallyDifferentThing: 'foobar' })
+        .end(function(err){
+          assert.deepEqual(err.actual, { foo: 'baz' });
+          done()
+      })
+    })
+
     it('should throw on no match', function(done){
       Assertion(segment)
         .set({ query: 'foo=baz&yolo=yup&bar=foo' })
@@ -492,6 +540,18 @@ describe('Assertion', function(){
         .identify({})
         .queryAlmost('foo', 'baz')
         .expects(200, done);
+    })
+
+    it('should not add new, undefined parameters to the actual query string', function(done){
+      Assertion(segment)
+        .set({ query: 'foo=baz' })
+        .set({ key: 'baz' })
+        .identify({})
+        .query({ totallyDifferentThing: 'foobar' })
+        .end(function(err){
+          assert.deepEqual(err.actual, { foo: 'baz' });
+          done()
+      })
     })
 
     it('should throw on no match', function(done){

@@ -1,3 +1,8 @@
+2.1.1 / 2017-03-21
+==================
+
+  * fix issue with .query and .queryAlmost. Both were adding undefined properties to the "actual" request query parameters when checking against the expected ones.
+
 2.1.0 / 2017-03-21
 ==================
 
