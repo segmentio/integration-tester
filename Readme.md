@@ -34,9 +34,14 @@ assert(integration)
 
 ## API
 
-#### Assertion(integration)
+#### Assertion(integration, dirname, options)
 
   Initialize new Assertion with `integration`.
+  Optionally pass the directory of the tests to support fixtures.
+  Options is used to specify whether you are testing a callback based integration or a Promise based on. For Promises, pass an object with a property called `isAsync` set to true:
+  `const Test = new Assertion(integration, __dirname, { isAsync: true }`
+  
+  Read more about Promise support here: 
 
 ##### .requests(n)
 
@@ -159,10 +164,26 @@ Assertion(segment)
 ##### end(fn)
 
   End assertions with `fn`.
+  **Important:** If you are testing an integration that is returning a Promise, do not use this method. Read more about Promise support here:
 
 ##### error(fn)
 
   Assert integration calls `fn(err)`.
+  
+  **Important:** This method will not work with Integrations that return Promises. For those, please use `.errors`
+  
+#### errors(Promise, statusCode)
+
+  Assert a promise based integration errors with an optional status code.
+  
+  ```
+  const res = test
+  .set(badSettings)
+  .track(fixture.input)
+  
+  return test.errors(res)
+  
+  ```
 
 ##### enabled(msg)
 
@@ -171,6 +192,7 @@ Assertion(segment)
 ##### disabled(msg)
 
   throws if the integration isn't disabled on `msg`.
+  
 
 ##### CHANNEL(msg)
 
@@ -184,6 +206,34 @@ Assertion(segment)
 ##### all()
 
   throws if the integration isn't enabled on all channels.
+  
+## Promises and Async/Await
+
+There are three changes you must make to support testing integrations that return Promises. 
+
+1. You must pass an options object as the third argument to the Constructor function with the property `isAsync` set to `true`:
+
+`const test = new Assertion(integration, __dirname, { isAsync: true }`
+
+2. You must invoke the integration method you are testing (.identify(fixture.input), .track(fixture.input), .page(fixture.input), etc... as the final part of the method chain instead of .end(done)):
+
+```
+test
+.request(1)
+.sends(fixture.output)
+.expects(200)
+.identify(fixture.input)
+```
+
+3. To test for an error, you must first return the Promise from the integration method and pass it as an argument to `test.errors`:
+
+```
+const res = test
+.set(badSettings)
+.track(fixture.input)
+
+return test.errors(res) // will pass if the integration method errors
+```
 
 ## License
 
