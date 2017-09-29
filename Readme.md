@@ -39,7 +39,10 @@ assert(integration)
   Initialize new Assertion with `integration`.
   Optionally pass the directory of the tests to support fixtures.
   Options is used to specify whether you are testing a callback based integration or a Promise based on. For Promises, pass an object with a property called `isAsync` set to true:
-  `const Test = new Assertion(integration, __dirname, { isAsync: true }`
+
+  ```
+  const Test = new Assertion(integration, __dirname, { isAsync: true }
+  ```
   
   Read more about Promise support [here](#promises-and-asyncawait).
 
