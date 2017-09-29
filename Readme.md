@@ -41,7 +41,7 @@ assert(integration)
   Options is used to specify whether you are testing a callback based integration or a Promise based on. For Promises, pass an object with a property called `isAsync` set to true:
   `const Test = new Assertion(integration, __dirname, { isAsync: true }`
   
-  Read more about Promise support here: 
+  Read more about Promise support [here](#promises-and-asyncawait).
 
 ##### .requests(n)
 
@@ -164,7 +164,7 @@ Assertion(segment)
 ##### end(fn)
 
   End assertions with `fn`.
-  **Important:** If you are testing an integration that is returning a Promise, do not use this method. Read more about Promise support here:
+  **Important:** If you are testing an integration that is returning a Promise, do not use this method. Read more about Promise support [here](#promises-and-asyncawait).
 
 ##### error(fn)
 
