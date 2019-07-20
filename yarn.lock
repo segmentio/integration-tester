@@ -182,7 +182,7 @@ compressible@~2.0.5:
 
 compression@~1.5.2:
   version "1.5.2"
-  resolved "http://registry.npmjs.org/compression/-/compression-1.5.2.tgz#b03b8d86e6f8ad29683cba8df91ddc6ffc77b395"
+  resolved "https://registry.npmjs.org/compression/-/compression-1.5.2.tgz#b03b8d86e6f8ad29683cba8df91ddc6ffc77b395"
   dependencies:
     accepts "~1.2.12"
     bytes "2.1.0"
@@ -581,8 +581,8 @@ lodash.keys@^3.0.0:
     lodash.isarray "^3.0.0"
 
 lodash@^4.16.0:
-  version "4.17.10"
-  resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
 
 media-typer@0.3.0:
   version "0.3.0"
@@ -999,9 +999,10 @@ type-is@~1.6.6:
     media-typer "0.3.0"
     mime-types "~2.1.18"
 
-"type@git://github.com/segmentio/type.git":
+"type@git://github.com/segmentio/type":
   version "1.0.0"
-  resolved "git://github.com/segmentio/type.git#06dc28f194cbbcce1f2a9fef4291c6974c16fd6e"
+  uid "06dc28f194cbbcce1f2a9fef4291c6974c16fd6e"
+  resolved "git://github.com/segmentio/type#06dc28f194cbbcce1f2a9fef4291c6974c16fd6e"
 
 uid-safe@2.1.4:
   version "2.1.4"
