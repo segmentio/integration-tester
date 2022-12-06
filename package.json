@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "batch": "~0.5.1",
-    "express": "3",
+    "express": "4",
     "mocha": "^3.2.0",
     "segmentio-integration": "^5.1.0",
     "superagent": "^3.5.1"
