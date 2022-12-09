@@ -182,7 +182,7 @@ compressible@~2.0.5:
 
 compression@~1.5.2:
   version "1.5.2"
-  resolved "http://registry.npmjs.org/compression/-/compression-1.5.2.tgz#b03b8d86e6f8ad29683cba8df91ddc6ffc77b395"
+  resolved "https://registry.npmjs.org/compression/-/compression-1.5.2.tgz#b03b8d86e6f8ad29683cba8df91ddc6ffc77b395"
   dependencies:
     accepts "~1.2.12"
     bytes "2.1.0"
@@ -759,13 +759,13 @@ qs@4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/qs/-/qs-4.0.0.tgz#c31d9b74ec27df75e543a86c78728ed8d4623607"
 
-qs@^1.2.1:
-  version "1.2.2"
-  resolved "https://registry.npmjs.org/qs/-/qs-1.2.2.tgz#19b57ff24dc2a99ce1f8bdf6afcda59f8ef61f88"
-
 qs@^6.1.0, qs@^6.5.1:
   version "6.5.2"
   resolved "https://registry.npmjs.org/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
+
+qs@^6.2.4:
+  version "6.2.4"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.2.4.tgz#d90821bb8537cecc140e6c34f54ec76e54b39b22"
 
 random-bytes@~1.0.0:
   version "1.0.0"
@@ -999,9 +999,10 @@ type-is@~1.6.6:
     media-typer "0.3.0"
     mime-types "~2.1.18"
 
-"type@git://github.com/segmentio/type.git":
+"type@git://github.com/segmentio/type":
   version "1.0.0"
-  resolved "git://github.com/segmentio/type.git#06dc28f194cbbcce1f2a9fef4291c6974c16fd6e"
+  uid "06dc28f194cbbcce1f2a9fef4291c6974c16fd6e"
+  resolved "git://github.com/segmentio/type#06dc28f194cbbcce1f2a9fef4291c6974c16fd6e"
 
 uid-safe@2.1.4:
   version "2.1.4"
