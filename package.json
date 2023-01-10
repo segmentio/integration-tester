@@ -6,7 +6,7 @@
   "dependencies": {
     "analytics-events": "^2.0.0",
     "clone-component": "^0.2.2",
-    "ms": "^0.6.2",
+    "ms": "^2.0.0",
     "qs": "^1.2.1",
     "segmentio-facade": "^3.0.0"
   },
