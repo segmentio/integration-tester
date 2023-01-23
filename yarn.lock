@@ -182,7 +182,7 @@ compressible@~2.0.5:
 
 compression@~1.5.2:
   version "1.5.2"
-  resolved "http://registry.npmjs.org/compression/-/compression-1.5.2.tgz#b03b8d86e6f8ad29683cba8df91ddc6ffc77b395"
+  resolved "https://registry.npmjs.org/compression/-/compression-1.5.2.tgz#b03b8d86e6f8ad29683cba8df91ddc6ffc77b395"
   dependencies:
     accepts "~1.2.12"
     bytes "2.1.0"
@@ -264,8 +264,8 @@ cookie@0.1.3:
   resolved "https://registry.npmjs.org/cookie/-/cookie-0.1.3.tgz#e734a5c1417fce472d5aef82c381cabb64d1a435"
 
 cookiejar@^2.0.6, cookiejar@^2.1.0:
-  version "2.1.2"
-  resolved "https://registry.npmjs.org/cookiejar/-/cookiejar-2.1.2.tgz#dd8a235530752f988f9a0844f3fc589e3111125c"
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.4.tgz#ee669c1fea2cf42dc31585469d193fef0d65771b"
 
 core-util-is@~1.0.0:
   version "1.0.2"
@@ -999,9 +999,10 @@ type-is@~1.6.6:
     media-typer "0.3.0"
     mime-types "~2.1.18"
 
-"type@git://github.com/segmentio/type.git":
+"type@git://github.com/segmentio/type":
   version "1.0.0"
-  resolved "git://github.com/segmentio/type.git#06dc28f194cbbcce1f2a9fef4291c6974c16fd6e"
+  uid "06dc28f194cbbcce1f2a9fef4291c6974c16fd6e"
+  resolved "git://github.com/segmentio/type#06dc28f194cbbcce1f2a9fef4291c6974c16fd6e"
 
 uid-safe@2.1.4:
   version "2.1.4"
